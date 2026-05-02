@@ -147,6 +147,51 @@ function addPhotos() {
   renderPreview();
 }
 
+function confirmDelete(message) {
+  return window.confirm(message);
+}
+
+function deleteNews(index) {
+  if (!confirmDelete('Видалити цю новину?')) {
+    return;
+  }
+
+  news.splice(index, 1);
+  renderPreview();
+}
+
+function deleteSchedule(index) {
+  if (!confirmDelete('Видалити цей запис розкладу?')) {
+    return;
+  }
+
+  schedule.splice(index, 1);
+  renderPreview();
+}
+
+function deletePhotoSection(index) {
+  if (!confirmDelete('Видалити весь блок фотографій?')) {
+    return;
+  }
+
+  photos.splice(index, 1);
+  renderPreview();
+}
+
+function deletePhoto(sectionIndex, imageIndex) {
+  if (!confirmDelete('Видалити цю фотографію?')) {
+    return;
+  }
+
+  photos[sectionIndex].images.splice(imageIndex, 1);
+
+  if (!photos[sectionIndex].images.length) {
+    photos.splice(sectionIndex, 1);
+  }
+
+  renderPreview();
+}
+
 function renderPreview() {
   const element = document.getElementById('preview');
   element.innerHTML = '';
@@ -160,13 +205,16 @@ function renderPreview() {
     element.innerHTML += '<h3>Новини</h3>';
   }
 
-  news.forEach(item => {
+  news.forEach((item, index) => {
     element.innerHTML += `
-      <div class="card">
-        <p class="section-label">${escapeHTML(item.section)}</p>
-        <h3>${escapeHTML(item.title)}</h3>
-        <small>${escapeHTML(item.date)}</small>
-        <p>${formatText(item.text)}</p>
+      <div class="card admin-item">
+        <div class="admin-item-content">
+          <p class="section-label">${escapeHTML(item.section)}</p>
+          <h3>${escapeHTML(item.title)}</h3>
+          <small>${escapeHTML(item.date)}</small>
+          <p>${formatText(item.text)}</p>
+        </div>
+        <button type="button" class="danger-button" onclick="deleteNews(${index})">Видалити</button>
       </div>
     `;
   });
@@ -175,14 +223,22 @@ function renderPreview() {
     element.innerHTML += '<h3>Фотографії</h3>';
   }
 
-  photos.forEach(item => {
+  photos.forEach((item, sectionIndex) => {
     element.innerHTML += `
-      <div class="card">
-        <p class="section-label">${escapeHTML(item.section)}</p>
-        <h3>${escapeHTML(item.title)}</h3>
-        <div class="preview-images">
-          ${(item.images || []).map(image => `<img src="${escapeHTML(image)}" alt="${escapeHTML(item.title)}" loading="lazy">`).join('')}
+      <div class="card admin-item">
+        <div class="admin-item-content">
+          <p class="section-label">${escapeHTML(item.section)}</p>
+          <h3>${escapeHTML(item.title)}</h3>
+          <div class="preview-images">
+            ${(item.images || []).map((image, imageIndex) => `
+              <div class="preview-photo">
+                <img src="${escapeHTML(image)}" alt="${escapeHTML(item.title)}" loading="lazy">
+                <button type="button" class="danger-button small-button" onclick="deletePhoto(${sectionIndex}, ${imageIndex})">Видалити фото</button>
+              </div>
+            `).join('')}
+          </div>
         </div>
+        <button type="button" class="danger-button" onclick="deletePhotoSection(${sectionIndex})">Видалити блок</button>
       </div>
     `;
   });
@@ -191,13 +247,16 @@ function renderPreview() {
     element.innerHTML += '<h3>Розклад</h3>';
   }
 
-  schedule.forEach(item => {
+  schedule.forEach((item, index) => {
     element.innerHTML += `
-      <div class="card">
-        <p class="section-label">${escapeHTML(item.section)}</p>
-        <h3>${escapeHTML(item.title)}</h3>
-        <small>${escapeHTML(item.date)}</small>
-        <p>${formatText(item.text)}</p>
+      <div class="card admin-item">
+        <div class="admin-item-content">
+          <p class="section-label">${escapeHTML(item.section)}</p>
+          <h3>${escapeHTML(item.title)}</h3>
+          <small>${escapeHTML(item.date)}</small>
+          <p>${formatText(item.text)}</p>
+        </div>
+        <button type="button" class="danger-button" onclick="deleteSchedule(${index})">Видалити</button>
       </div>
     `;
   });
