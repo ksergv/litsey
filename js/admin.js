@@ -298,7 +298,19 @@ function setApiStatus(message, isError = false) {
 }
 
 function getApiEndpoint() {
-  return getValue('api-url') || '/api/update-json';
+  const value = getValue('api-url');
+
+  if (!value) {
+    return '/api/update-json';
+  }
+
+  try {
+    const url = new URL(value);
+    url.pathname = url.pathname.replace(/\/+/g, '/');
+    return url.toString();
+  } catch (error) {
+    return value.replace(/([^:])\/{2,}/g, '$1/');
+  }
 }
 
 function getAdminApiKey() {

@@ -114,9 +114,45 @@ http://127.0.0.1:8000/admin/index.html
 https://your-site.vercel.app/api/update-json
 ```
 
+В адресі має бути один `/` перед `api`:
+
+```text
+https://your-site.vercel.app/api/update-json
+```
+
+Неправильно:
+
+```text
+https://your-site.vercel.app//api/update-json
+```
+
 Потім введіть `ADMIN_API_KEY` і натисніть потрібну кнопку відправки.
 
-## 7. Важливо
+## 7. Якщо з'являється `Failed to fetch`
+
+Якщо в адмінці після відправки з'являється `Failed to fetch`, перевірте Vercel Deployment Protection.
+
+API не працюватиме з GitHub Pages, якщо Vercel показує сторінку:
+
+```text
+Authentication Required
+```
+
+Що зробити:
+
+1. Відкрийте проєкт у Vercel.
+2. Перейдіть у `Settings` -> `Deployment Protection`.
+3. Для production deployment вимкніть `Vercel Authentication` або дозвольте публічний доступ до сайту.
+4. Зробіть redeploy.
+5. Перевірте API в браузері:
+
+```text
+https://your-site.vercel.app/api/update-json
+```
+
+Для GET-запиту нормально побачити відповідь на кшталт `Method not allowed`. Це означає, що API доступний. Якщо бачите `Authentication Required`, захист Vercel ще увімкнений.
+
+## 8. Важливо
 
 - GitHub token зберігається тільки у Vercel Environment Variables.
 - У браузер вводиться лише `ADMIN_API_KEY`, а не GitHub token.
