@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Адміністратор | Південноукраїнський ліцей №3</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <nav class="menu">
+    <a href="../index.html">На сайт</a>
+    <a href="../pages/news.html">Новини</a>
+    <a href="../pages/photos.html">Фотографії</a>
+    <a href="../pages/schedule.html">Розклад</a>
+  </nav>
+
+  <main class="container">
+    <section id="login" class="admin-panel">
+      <h1>Вхід адміністратора</h1>
+      <p class="lead">Розділ лише для підготовки матеріалів сайту.</p>
+      <label for="password">Пароль</label>
+      <input type="password" id="password" autocomplete="current-password">
+      <button type="button" onclick="checkPassword()">Увійти</button>
+    </section>
+
+    <section id="admin" style="display:none;">
+      <h1>Адмін-панель</h1>
+      <div class="button-row">
+        <button type="button" onclick="logout()">Вийти</button>
+      </div>
+
+      <div class="admin-layout">
+        <section class="admin-panel">
+          <h2>Додати новину</h2>
+
+          <label for="news-section">Розділ</label>
+          <select id="news-section">
+            <option>Оголошення</option>
+            <option>Події</option>
+            <option>Досягнення</option>
+          </select>
+
+          <label for="news-title">Заголовок</label>
+          <input id="news-title" placeholder="Наприклад: Перемога в конкурсі">
+
+          <label for="news-date">Дата</label>
+          <input id="news-date" type="date">
+
+          <label for="news-text">Текст</label>
+          <textarea id="news-text" placeholder="Короткий опис новини"></textarea>
+
+          <button type="button" onclick="addNews()">Додати</button>
+        </section>
+
+        <section class="admin-panel">
+          <h2>Додати фотографії</h2>
+
+          <label for="photo-section">Розділ</label>
+          <select id="photo-section">
+            <option>Заходи</option>
+            <option>Уроки</option>
+            <option>Шкільне життя</option>
+          </select>
+
+          <label for="photo-title">Назва блоку</label>
+          <input id="photo-title" placeholder="Наприклад: День знань">
+
+          <label for="photo-urls">Посилання Cloudinary</label>
+          <textarea id="photo-urls" placeholder="Одне посилання на рядок"></textarea>
+
+          <button type="button" onclick="addPhotos()">Додати</button>
+        </section>
+
+        <section class="admin-panel">
+          <h2>Додати розклад</h2>
+
+          <label for="schedule-section">Розділ</label>
+          <select id="schedule-section">
+            <option>Заняття</option>
+            <option>Заходи</option>
+            <option>Контрольні</option>
+          </select>
+
+          <label for="schedule-title">Заголовок</label>
+          <input id="schedule-title" placeholder="Наприклад: Понеділок">
+
+          <label for="schedule-date">Дата</label>
+          <input id="schedule-date" type="date">
+
+          <label for="schedule-text">Текст</label>
+          <textarea id="schedule-text" placeholder="Час та опис"></textarea>
+
+          <button type="button" onclick="addSchedule()">Додати</button>
+        </section>
+
+        <section class="admin-panel">
+          <h2>Збереження</h2>
+          <p>Після додавання матеріалів завантажте потрібні JSON-файли та замініть ними файли в папці <strong>data</strong>.</p>
+          <div class="button-row">
+            <button type="button" onclick="downloadNewsJSON()">news.json</button>
+            <button type="button" onclick="downloadPhotosJSON()">photos.json</button>
+            <button type="button" onclick="downloadScheduleJSON()">schedule.json</button>
+          </div>
+        </section>
+      </div>
+
+      <section class="admin-panel">
+        <h2>Попередній перегляд</h2>
+        <div id="preview">
+          <p class="empty">Матеріали ще не додано.</p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="../js/admin.js"></script>
+</body>
+</html>
