@@ -3,6 +3,7 @@ const ADMIN_PASSWORD = '12345';
 let news = [];
 let photos = [];
 let schedule = [];
+let dataLoaded = false;
 
 function escapeHTML(value) {
   return String(value ?? '')
@@ -15,6 +16,39 @@ function escapeHTML(value) {
 
 function formatText(value) {
   return escapeHTML(value).replaceAll('\n', '<br>');
+}
+
+async function loadJSON(path, fallback) {
+  try {
+    const response = await fetch(path);
+
+    if (!response.ok) {
+      throw new Error(`Не вдалося завантажити ${path}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.warn(error.message);
+    return fallback;
+  }
+}
+
+async function loadExistingData() {
+  if (dataLoaded) {
+    return;
+  }
+
+  const [loadedNews, loadedPhotos, loadedSchedule] = await Promise.all([
+    loadJSON('../data/news.json', []),
+    loadJSON('../data/photos.json', []),
+    loadJSON('../data/schedule.json', [])
+  ]);
+
+  news = Array.isArray(loadedNews) ? loadedNews : [];
+  photos = Array.isArray(loadedPhotos) ? loadedPhotos : [];
+  schedule = Array.isArray(loadedSchedule) ? loadedSchedule : [];
+  dataLoaded = true;
+  renderPreview();
 }
 
 function checkPassword() {
@@ -31,6 +65,7 @@ function checkPassword() {
 function showAdmin() {
   document.getElementById('login').style.display = 'none';
   document.getElementById('admin').style.display = 'block';
+  loadExistingData();
 }
 
 window.addEventListener('load', () => {
@@ -121,6 +156,10 @@ function renderPreview() {
     return;
   }
 
+  if (news.length) {
+    element.innerHTML += '<h3>Новини</h3>';
+  }
+
   news.forEach(item => {
     element.innerHTML += `
       <div class="card">
@@ -132,17 +171,25 @@ function renderPreview() {
     `;
   });
 
+  if (photos.length) {
+    element.innerHTML += '<h3>Фотографії</h3>';
+  }
+
   photos.forEach(item => {
     element.innerHTML += `
       <div class="card">
         <p class="section-label">${escapeHTML(item.section)}</p>
         <h3>${escapeHTML(item.title)}</h3>
         <div class="preview-images">
-          ${item.images.map(image => `<img src="${escapeHTML(image)}" alt="${escapeHTML(item.title)}" loading="lazy">`).join('')}
+          ${(item.images || []).map(image => `<img src="${escapeHTML(image)}" alt="${escapeHTML(item.title)}" loading="lazy">`).join('')}
         </div>
       </div>
     `;
   });
+
+  if (schedule.length) {
+    element.innerHTML += '<h3>Розклад</h3>';
+  }
 
   schedule.forEach(item => {
     element.innerHTML += `
