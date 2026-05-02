@@ -29,6 +29,8 @@
 ]
 ```
 
+Детальна інструкція: [CLOUDINARY.md](CLOUDINARY.md).
+
 ## Адмінка
 
 Адмінка знаходиться за адресою `admin/index.html`.
