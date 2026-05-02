@@ -3,8 +3,30 @@
     "section": "Заходи",
     "title": "Шкільні заходи",
     "images": [
-      "https://res.cloudinary.com/demo/image/upload/sample.jpg",
-      "https://res.cloudinary.com/demo/image/upload/cld-sample.jpg"
+      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/sample.jpg",
+      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample.jpg",
+      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-2.jpg",
+      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-3.jpg",
+      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-4.jpg",
+      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-5.jpg"
+    ]
+  },
+  {
+    "section": "Уроки",
+    "title": "Навчальні моменти",
+    "images": [
+      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/casual",
+      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/models",
+      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/colored_pencils"
+    ]
+  },
+  {
+    "section": "Шкільне життя",
+    "title": "Життя ліцею",
+    "images": [
+      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/shoes",
+      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/camera",
+      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/handbag"
     ]
   }
 ]
