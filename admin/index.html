@@ -104,12 +104,29 @@
       <section class="admin-panel save-panel">
         <h2>Збереження</h2>
         <p>Адмінка завантажує поточні дані з папки <strong>data</strong>. Після додавання або видалення матеріалів скачаний JSON міститиме всі поточні записи.</p>
-        <p class="notice">Після видалення запису або фотографії обов'язково скачайте відповідний JSON, замініть файл у папці <strong>data</strong>, зробіть commit і повторно відправте зміни на GitHub.</p>
+        <p class="notice">Після видалення запису або фотографії обов'язково збережіть відповідний JSON: скачайте файл вручну або відправте його на GitHub через Vercel API.</p>
+
+        <h3>Скачати JSON</h3>
         <div class="button-row">
           <button type="button" onclick="downloadNewsJSON()">news.json</button>
           <button type="button" onclick="downloadPhotosJSON()">photos.json</button>
           <button type="button" onclick="downloadScheduleJSON()">schedule.json</button>
         </div>
+
+        <h3>Відправити на GitHub через Vercel</h3>
+        <label for="admin-api-key">Ключ адміністратора Vercel API</label>
+        <input type="password" id="admin-api-key" autocomplete="off" placeholder="ADMIN_API_KEY">
+
+        <label for="api-url">Адреса API, якщо адмінка відкрита локально</label>
+        <input id="api-url" placeholder="Наприклад: https://your-site.vercel.app/api/update-json">
+
+        <div class="button-row">
+          <button type="button" onclick="publishNewsJSON()">Відправити news.json</button>
+          <button type="button" onclick="publishPhotosJSON()">Відправити photos.json</button>
+          <button type="button" onclick="publishScheduleJSON()">Відправити schedule.json</button>
+          <button type="button" onclick="publishAllJSON()">Відправити все</button>
+        </div>
+        <p id="api-status" class="status-text"></p>
       </section>
     </section>
   </main>

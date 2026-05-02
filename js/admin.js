@@ -285,3 +285,95 @@ function downloadPhotosJSON() {
 function downloadScheduleJSON() {
   downloadFile('schedule.json', schedule);
 }
+
+function setApiStatus(message, isError = false) {
+  const element = document.getElementById('api-status');
+
+  if (!element) {
+    return;
+  }
+
+  element.textContent = message;
+  element.className = isError ? 'status-text error-text' : 'status-text success-text';
+}
+
+function getApiEndpoint() {
+  return getValue('api-url') || '/api/update-json';
+}
+
+function getAdminApiKey() {
+  return getValue('admin-api-key');
+}
+
+async function publishJSON(filename, content) {
+  const adminKey = getAdminApiKey();
+
+  if (!adminKey) {
+    alert('Введіть ключ адміністратора Vercel API.');
+    return false;
+  }
+
+  setApiStatus(`Відправляємо ${filename}...`);
+
+  try {
+    const response = await fetch(getApiEndpoint(), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Admin-Key': adminKey
+      },
+      body: JSON.stringify({
+        filename,
+        content,
+        message: `update ${filename}`
+      })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || 'Не вдалося оновити файл на GitHub.');
+    }
+
+    setApiStatus(`${filename} відправлено на GitHub.`);
+    return true;
+  } catch (error) {
+    setApiStatus(error.message, true);
+    return false;
+  }
+}
+
+function publishNewsJSON() {
+  publishJSON('news.json', news);
+}
+
+function publishPhotosJSON() {
+  publishJSON('photos.json', photos);
+}
+
+function publishScheduleJSON() {
+  publishJSON('schedule.json', schedule);
+}
+
+async function publishAllJSON() {
+  if (!getAdminApiKey()) {
+    alert('Введіть ключ адміністратора Vercel API.');
+    return;
+  }
+
+  const files = [
+    ['news.json', news],
+    ['photos.json', photos],
+    ['schedule.json', schedule]
+  ];
+
+  for (const [filename, content] of files) {
+    const ok = await publishJSON(filename, content);
+
+    if (!ok) {
+      return;
+    }
+  }
+
+  setApiStatus('Усі JSON-файли відправлено на GitHub.');
+}

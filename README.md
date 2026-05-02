@@ -45,6 +45,8 @@
 
 Інструкція для передачі JSON-файлів на GitHub: [GITHUB_JSON.md](GITHUB_JSON.md).
 
+Інструкція для автоматичного запису JSON через Vercel API: [VERCEL.md](VERCEL.md).
+
 Поточний пароль у `js/admin.js`:
 
 ```js
