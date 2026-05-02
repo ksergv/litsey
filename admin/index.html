@@ -92,23 +92,23 @@
 
           <button type="button" onclick="addSchedule()">Додати</button>
         </section>
-
-        <section class="admin-panel">
-          <h2>Збереження</h2>
-          <p>Адмінка завантажує поточні дані з папки <strong>data</strong>. Після додавання матеріалів скачаний JSON міститиме старі записи і нові зміни.</p>
-          <p>Завантажте потрібні JSON-файли та замініть ними файли в папці <strong>data</strong>.</p>
-          <div class="button-row">
-            <button type="button" onclick="downloadNewsJSON()">news.json</button>
-            <button type="button" onclick="downloadPhotosJSON()">photos.json</button>
-            <button type="button" onclick="downloadScheduleJSON()">schedule.json</button>
-          </div>
-        </section>
       </div>
 
       <section class="admin-panel">
         <h2>Попередній перегляд</h2>
         <div id="preview">
           <p class="empty">Матеріали ще не додано.</p>
+        </div>
+      </section>
+
+      <section class="admin-panel save-panel">
+        <h2>Збереження</h2>
+        <p>Адмінка завантажує поточні дані з папки <strong>data</strong>. Після додавання або видалення матеріалів скачаний JSON міститиме всі поточні записи.</p>
+        <p class="notice">Після видалення запису або фотографії обов'язково скачайте відповідний JSON, замініть файл у папці <strong>data</strong>, зробіть commit і повторно відправте зміни на GitHub.</p>
+        <div class="button-row">
+          <button type="button" onclick="downloadNewsJSON()">news.json</button>
+          <button type="button" onclick="downloadPhotosJSON()">photos.json</button>
+          <button type="button" onclick="downloadScheduleJSON()">schedule.json</button>
         </div>
       </section>
     </section>
