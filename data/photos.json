@@ -26,5 +26,12 @@
       "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/shoes",
       "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/camera"
     ]
+  },
+  {
+    "section": "Заходи",
+    "title": "проверка",
+    "images": [
+      "https://res.cloudinary.com/dos2lc5ns/image/upload/v1777812309/action_cq1xto.webp"
+    ]
   }
 ]
