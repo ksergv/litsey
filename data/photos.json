@@ -5,7 +5,9 @@
     "images": [
       "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/sample.jpg",
       "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample.jpg",
-      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-2.jpg"
+      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-2.jpg",
+      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-3.jpg",
+      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-4.jpg"
     ]
   },
   {
