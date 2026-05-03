@@ -18,9 +18,9 @@
   <main class="container">
     <h1>Розклад</h1>
     <div class="subnav" aria-label="Розділи розкладу">
-       <a href="#classes">Заняття</a>
-      <a href="#events">Заходи</a>
-      <a href="#tests">Контрольні</a>
+      <a href="#" onclick="showSection('classes', event)">Заняття</a>
+      <a href="#" onclick="showSection('events', event)">Заходи</a>
+      <a href="#" onclick="showSection('tests', event)">Контрольні</a>
     </div>
       <div class="class-filter">
   <select id="gradeFilter" onchange="updateFilter()">
@@ -50,7 +50,9 @@
   по дату <input type="date" id="dateTo" onchange="updateFilter()">
 </div>
      
-    <div id="schedule" class="content-list"></div>
+<div id="classes" class="content-list"></div>
+<div id="events" class="content-list"></div>
+<div id="tests" class="content-list"></div>
   </main>
 
   <footer class="footer">

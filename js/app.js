@@ -51,8 +51,16 @@ async function loadJSON(path) {
   }
 }
 
-function showError(element, message) {
-  element.innerHTML = `<p class="empty">${escapeHTML(message)}</p>`;
+function showError(target, message) {
+  const html = `<p class="empty">${escapeHTML(message)}</p>`;
+
+  if (Array.isArray(target)) {
+    target.forEach(el => {
+      if (el) el.innerHTML = html;
+    });
+  } else {
+    if (target) target.innerHTML = html;
+  }
 }
 
 async function loadNews() {
@@ -121,67 +129,109 @@ function updateFilter() {
   loadSchedule();
 }
 
+function renderScheduleList(data) {
+  return data.map(item => {
+    let content = '';
+
+    if (item.classes) {
+      let entries = Object.entries(item.classes);
+
+      entries = entries.filter(([cls]) => {
+        const [grade, letter] = cls.split('-');
+
+        if (selectedGrade !== 'all' && grade !== selectedGrade) return false;
+        if (selectedLetter !== 'all' && letter !== selectedLetter) return false;
+
+        return true;
+      });
+
+      if (!entries.length) return '';
+
+      content = entries.map(([cls, text]) => `
+        <p>
+          <strong>${escapeHTML(cls)}</strong><br>
+          ${formatText(text)}
+        </p>
+      `).join('');
+    } else {
+      content = `<p>${formatText(item.text)}</p>`;
+    }
+
+    return `
+      <article class="card" id="${slugify(item.section)}">
+        <p class="section-label">${escapeHTML(item.section)}</p>
+        <h2>${escapeHTML(item.title || 'Розклад')}</h2>
+        <small>${escapeHTML(item.date)}</small>
+        ${content}
+      </article>
+    `;
+  }).join('');
+}
+
+function showSection(sectionId, event) {
+  event.preventDefault();
+
+  const sections = ['classes', 'events', 'tests'];
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.display = (id === sectionId) ? 'grid' : 'none';
+    }
+  });
+
+  // активная кнопка
+  document.querySelectorAll('.subnav a').forEach(a => {
+    a.classList.remove('active');
+  });
+
+  event.target.classList.add('active');
+}
 async function loadSchedule() {
-  const element = document.getElementById('schedule');
+  const classesEl = document.getElementById('classes');
+  const eventsEl = document.getElementById('events');
+  const testsEl = document.getElementById('tests');
 
   try {
     const data = await loadJSON('../data/schedule.json');
-   data.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-let filteredData = data.filter(item => {
-  if (dateFrom && new Date(item.date) < new Date(dateFrom)) {
-    return false;
-  }
+    data.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-  if (dateTo && new Date(item.date) > new Date(dateTo)) {
-    return false;
-  }
+    let filteredData = data.filter(item => {
+      if (dateFrom && new Date(item.date) < new Date(dateFrom)) return false;
+      if (dateTo && new Date(item.date) > new Date(dateTo)) return false;
+      return true;
+    });
 
-  return true;
-});
+    const classesData = filteredData.filter(i => i.section === 'Заняття');
+    const eventsData = filteredData.filter(i => i.section === 'Заходи');
+    const testsData = filteredData.filter(i => i.section === 'Контрольні');
 
-    if (!filteredData.length) {
-      showError(element, 'Розклад ще не додано.');
-      return;
+    // Заняття
+    if (!classesData.length) {
+      classesEl.innerHTML = '<p class="empty">Немає занять</p>';
+    } else {
+      classesEl.innerHTML = renderScheduleList(classesData);
     }
 
-    element.innerHTML = filteredData.map(item => {
-      let content = '';
+    // Заходи
+    if (!eventsData.length) {
+      eventsEl.innerHTML = '<p class="empty">Немає заходів</p>';
+    } else {
+      eventsEl.innerHTML = renderScheduleList(eventsData);
+    }
 
-    if (item.classes) {
-  let entries = Object.entries(item.classes);
+    // Контрольні
+    if (!testsData.length) {
+      testsEl.innerHTML = '<p class="empty">Немає контрольних</p>';
+    } else {
+      testsEl.innerHTML = renderScheduleList(testsData);
+    }
 
-  entries = entries.filter(([cls]) => {
-    const [grade, letter] = cls.split('-');
-
-    if (selectedGrade !== 'all' && grade !== selectedGrade) return false;
-    if (selectedLetter !== 'all' && letter !== selectedLetter) return false;
-
-    return true;
-  });
-
-  if (!entries.length) return '';
-
-  content = entries.map(([cls, text]) => `
-    <p>
-      <strong>${escapeHTML(cls)}</strong><br>
-      ${formatText(text)}
-    </p>
-  `).join('');
-      } else {
-        content = `<p>${formatText(item.text)}</p>`;
-      }
-
-      return `
-        <article class="card" id="${slugify(item.section)}">
-          <p class="section-label">${escapeHTML(item.section || 'Розклад')}</p>
-          <h2>${escapeHTML(item.title || '')}</h2>
-          <small>${escapeHTML(item.date)}</small>
-          ${content}
-        </article>
-      `;
-    }).join('');
   } catch (error) {
-    showError(element, error.message);
+    showError(classesEl, error.message);
+    showError(eventsEl, error.message);
+    showError(testsEl, error.message);
   }
+  showSection('classes', { preventDefault: () => {}, target: document.querySelector('.subnav a') });
 }

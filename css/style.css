@@ -82,6 +82,10 @@ h1 {
   border: 1px solid #c4dfca;
   border-radius: 6px;
 }
+.subnav a.active {
+  background: #2f7d4c;
+  color: white;
+}
 
 .content-list {
   display: grid;
