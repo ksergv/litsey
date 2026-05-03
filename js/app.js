@@ -30,15 +30,25 @@ function slugify(value) {
 }
 
 async function loadJSON(path) {
- const response = await fetch(path + '?t=' + Date.now(), {
-  cache: 'no-store'
-});
+  const response = await fetch(path + '?t=' + Date.now(), {
+    cache: 'no-store'
+  });
 
   if (!response.ok) {
     throw new Error(`Не вдалося завантажити ${path}`);
   }
 
-  return response.json();
+  const text = await response.text();
+
+  if (!text.trim()) {
+    throw new Error(`Пустий JSON у файлі ${path}`);
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    throw new Error(`Невалідний JSON у файлі ${path}: ${error.message}`);
+  }
 }
 
 function showError(element, message) {

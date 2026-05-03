@@ -80,12 +80,16 @@ function logout() {
 }
 
 function getValue(id) {
-  return document.getElementById(id).value.trim();
+  const element = document.getElementById(id);
+  return element ? element.value.trim() : '';
 }
 
 function clearFields(ids) {
   ids.forEach(id => {
-    document.getElementById(id).value = '';
+    const element = document.getElementById(id);
+    if (element) {
+      element.value = '';
+    }
   });
 }
 
@@ -387,7 +391,8 @@ async function publishJSON(filename, content) {
       })
     });
 
-    const result = await response.json();
+    const responseText = await response.text();
+    const result = responseText ? JSON.parse(responseText) : {};
 
     if (!response.ok) {
       throw new Error(result.error || 'Не вдалося оновити файл на GitHub.');
