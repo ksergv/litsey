@@ -162,25 +162,45 @@ function addSchedule() {
   renderPreview();
 }
 
+function addPhotoRow(url = '', caption = '') {
+  const container = document.getElementById('photo-list');
+
+  const div = document.createElement('div');
+  div.className = 'photo-row';
+
+  div.innerHTML = `
+    <input placeholder="URL фото" value="${url}">
+    <input placeholder="Підпис" value="${caption}">
+    <button type="button" onclick="this.parentElement.remove()">✕</button>
+  `;
+
+  container.appendChild(div);
+}
+
 function addPhotos() {
   const title = getValue('photo-title');
-  const urls = getValue('photo-urls')
-    .split('\n')
-    .map(url => url.trim())
-    .filter(Boolean);
+  const rows = document.querySelectorAll('#photo-list .photo-row');
 
-  if (!title || !urls.length) {
-    alert('Заповніть назву блоку та додайте хоча б одне посилання Cloudinary.');
+  if (!title || !rows.length) {
+    alert('Додайте хоча б одне фото.');
     return;
   }
+
+  const images = Array.from(rows).map(row => {
+    const inputs = row.querySelectorAll('input');
+
+    return {
+      url: inputs[0].value.trim(),
+      caption: inputs[1].value.trim()
+    };
+  }).filter(img => img.url);
 
   photos.push({
     section: getValue('photo-section') || 'Заходи',
     title,
-    images: urls
+    images
   });
 
-  clearFields(['photo-title', 'photo-urls']);
   renderPreview();
 }
 
@@ -229,6 +249,22 @@ function deletePhoto(sectionIndex, imageIndex) {
   renderPreview();
 }
 
+function renderPhotoPreview(item) {
+  return `
+    <section class="photo-section">
+      <p class="section-label">${escapeHTML(item.section)}</p>
+      <h2>${escapeHTML(item.title)}</h2>
+      <div class="photo-grid">
+        ${item.images.map(img => `
+          <div class="photo-item">
+            <img src="${escapeHTML(img.url)}">
+            <p class="photo-caption">${escapeHTML(img.caption || '')}</p>
+          </div>
+        `).join('')}
+      </div>
+    </section>
+  `;
+}
 function renderPreview() {
   const element = document.getElementById('preview');
   element.innerHTML = '';
@@ -257,28 +293,22 @@ function renderPreview() {
   });
 
   if (photos.length) {
-    element.innerHTML += '<h3>Фотографії</h3>';
-  }
+  element.innerHTML += '<h3>Фотографії</h3>';
+}
 
-  photos.forEach((item, sectionIndex) => {
-    element.innerHTML += `
-      <div class="card admin-item">
-        <div class="admin-item-content">
-          <p class="section-label">${escapeHTML(item.section)}</p>
-          <h3>${escapeHTML(item.title)}</h3>
-          <div class="preview-images">
-            ${(item.images || []).map((image, imageIndex) => `
-              <div class="preview-photo">
-                <img src="${escapeHTML(image)}" alt="${escapeHTML(item.title)}" loading="lazy">
-                <button type="button" class="danger-button small-button" onclick="deletePhoto(${sectionIndex}, ${imageIndex})">Видалити фото</button>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-        <button type="button" class="danger-button" onclick="deletePhotoSection(${sectionIndex})">Видалити блок</button>
+photos.forEach((item, index) => {
+  element.innerHTML += `
+    <div class="card admin-item">
+      <div class="admin-item-content">
+        ${renderPhotoPreview(item)}
       </div>
-    `;
-  });
+      <button type="button" class="danger-button" onclick="deletePhotoSection(${index})">
+        Видалити
+      </button>
+    </div>
+  `;
+});
+ 
 
   if (schedule.length) {
     element.innerHTML += '<h3>Розклад</h3>';
