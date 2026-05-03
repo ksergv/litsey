@@ -87,6 +87,23 @@ async function loadNews() {
   }
 }
 
+function showPhotoSection(sectionId, event) {
+  event.preventDefault();
+
+  const sections = document.querySelectorAll('.photo-section');
+
+  sections.forEach(el => {
+    el.style.display = (el.id === sectionId) ? 'block' : 'none';
+  });
+
+  // активная вкладка
+  document.querySelectorAll('.subnav a').forEach(a => {
+    a.classList.remove('active');
+  });
+
+  event.target.classList.add('active');
+}
+
 async function loadPhotos() {
   const element = document.getElementById('photos');
 
@@ -114,6 +131,12 @@ async function loadPhotos() {
   } catch (error) {
     showError(element, error.message);
   }
+  setTimeout(() => {
+  const first = document.querySelector('.subnav a');
+  if (first) {
+    first.click();
+  }
+}, 0);
 }
 
 
