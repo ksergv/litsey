@@ -298,7 +298,9 @@ button:focus {
   justify-content: center;
   margin-bottom: 16px;
 }
-
+.class-filter input {
+  max-width: 160px;
+}
 .class-filter button {
   background: #e5f2e8;
   color: #245c3a;

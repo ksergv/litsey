@@ -101,10 +101,13 @@ async function loadPhotos() {
 
 let selectedGrade = 'all';
 let selectedLetter = 'all';
+let dateFrom = '';
+let dateTo = '';
 function updateFilter() {
   selectedGrade = document.getElementById('gradeFilter').value;
   selectedLetter = document.getElementById('letterFilter').value;
-
+  dateFrom = document.getElementById('dateFrom').value;
+  dateTo = document.getElementById('dateTo').value;
   loadSchedule();
 }
 
@@ -113,33 +116,41 @@ async function loadSchedule() {
 
   try {
     const data = await loadJSON('../data/schedule.json');
-    data.sort((a, b) => new Date(a.date) - new Date(b.date));
+   data.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-    if (!data.length) {
+let filteredData = data.filter(item => {
+  if (dateFrom && new Date(item.date) < new Date(dateFrom)) {
+    return false;
+  }
+
+  if (dateTo && new Date(item.date) > new Date(dateTo)) {
+    return false;
+  }
+
+  return true;
+});
+
+    if (!filteredData.length) {
       showError(element, 'Розклад ще не додано.');
       return;
     }
 
-    element.innerHTML = data.map(item => {
+    element.innerHTML = filteredData.map(item => {
       let content = '';
 
-     if (item.classes) {
+    if (item.classes) {
   let entries = Object.entries(item.classes);
 
   entries = entries.filter(([cls]) => {
-    // cls = "11-А"
     const [grade, letter] = cls.split('-');
 
-    if (selectedGrade !== 'all' && grade !== selectedGrade) {
-      return false;
-    }
-
-    if (selectedLetter !== 'all' && letter !== selectedLetter) {
-      return false;
-    }
+    if (selectedGrade !== 'all' && grade !== selectedGrade) return false;
+    if (selectedLetter !== 'all' && letter !== selectedLetter) return false;
 
     return true;
   });
+
+  if (!entries.length) return '';
 
   content = entries.map(([cls, text]) => `
     <p>
