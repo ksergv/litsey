@@ -121,10 +121,13 @@ async function loadPhotos() {
         <h2>${escapeHTML(section.title)}</h2>
         <div class="photo-grid">
           ${(section.images || []).map((image, index) => `
-            <a href="${escapeHTML(image)}" target="_blank" rel="noopener">
-              <img src="${escapeHTML(image)}" alt="${escapeHTML(section.title)} ${index + 1}" loading="lazy">
-            </a>
-          `).join('')}
+  <div class="photo-item">
+    <a href="${escapeHTML(image)}" target="_blank" rel="noopener">
+      <img src="${escapeHTML(image)}" alt="Фото ${index + 1}" loading="lazy">
+    </a>
+    <p class="photo-caption">Фото ${index + 1}</p>
+  </div>
+`).join('')}
         </div>
       </section>
     `).join('');

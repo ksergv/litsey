@@ -139,6 +139,17 @@ h1 {
   background: #eef3ec;
 }
 
+.photo-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.photo-caption {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #52616b;
+  text-align: center;
+}
 .empty {
   text-align: center;
   color: #697780;
