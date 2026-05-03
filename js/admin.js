@@ -161,35 +161,29 @@ function addSchedule() {
   clearFields(['schedule-title', 'schedule-date', 'schedule-text', 'schedule-classes']);
   renderPreview();
 }
+
 function addPhotos() {
   const title = getValue('photo-title');
-  const raw = getValue('photo-urls');
+  const urls = getValue('photo-urls')
+    .split('\n')
+    .map(url => url.trim())
+    .filter(Boolean);
 
-  if (!title || !raw.trim()) {
-    alert('Заповніть назву блоку та додайте хоча б одне посилання.');
+  if (!title || !urls.length) {
+    alert('Заповніть назву блоку та додайте хоча б одне посилання Cloudinary.');
     return;
   }
-
-  const images = raw
-    .split('\n')
-    .map(line => line.trim())
-    .filter(Boolean)
-    .map(line => {
-      const [url, caption] = line.split('|').map(s => s.trim());
-
-      return caption
-        ? { url, caption }
-        : { url, caption: '' }; // всегда объект — это важно
-    });
 
   photos.push({
     section: getValue('photo-section') || 'Заходи',
     title,
-    images
+    images: urls
   });
 
+  clearFields(['photo-title', 'photo-urls']);
   renderPreview();
 }
+
 function confirmDelete(message) {
   return window.confirm(message);
 }
