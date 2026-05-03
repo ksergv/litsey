@@ -391,8 +391,7 @@ async function publishJSON(filename, content) {
       })
     });
 
-    const responseText = await response.text();
-    const result = responseText ? JSON.parse(responseText) : {};
+    const result = await response.json();
 
     if (!response.ok) {
       throw new Error(result.error || 'Не вдалося оновити файл на GitHub.');
