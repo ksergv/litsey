@@ -27,5 +27,19 @@
       "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/camera",
       "https://res-console.cloudinary.com/dos2lc5ns/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/YWN0aW9uX2NxMXh0bw==/template_primary"
     ]
+  },
+  {
+    "section": "Заходи",
+    "title": "проверка",
+    "images": [
+      "https://res.cloudinary.com/dos2lc5ns/image/upload/v1777812309/action_cq1xto.webp"
+    ]
+  },
+  {
+    "section": "Заходи",
+    "title": "гена",
+    "images": [
+      "https://res.cloudinary.com/dt4tkhpts/image/upload/v1777814532/Безымянный_qtjpht.png"
+    ]
   }
 ]
