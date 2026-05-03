@@ -8,10 +8,10 @@
 </head>
 <body>
    <nav class="menu">
-    <a href="index.html">Головна</a>
-    <a href="pages/news.html">Новини</a>
-    <a href="pages/photos.html">Фотографії</a>
-    <a href="pages/schedule.html">Розклад</a>
+    <a href="../index.html">Головна</a>
+    <a href="../pages/news.html">Новини</a>
+    <a href="../pages/photos.html">Фотографії</a>
+    <a href="../pages/schedule.html">Розклад</a>
   </nav>
 
   <main class="container">
@@ -81,6 +81,12 @@
             <option>Контрольні</option>
           </select>
 
+          <label for="schedule-type">Тип запису</label>
+          <select id="schedule-type">
+            <option value="text">Текст</option>
+            <option value="classes">За класами</option>
+          </select>
+
           <label for="schedule-title">Заголовок</label>
           <input id="schedule-title" placeholder="Наприклад: Понеділок">
 
@@ -89,6 +95,9 @@
 
           <label for="schedule-text">Текст</label>
           <textarea id="schedule-text" placeholder="Час та опис"></textarea>
+
+          <label for="schedule-classes">Класи та розклад</label>
+          <textarea id="schedule-classes" placeholder="11-А: 10:00 - математика\n11-Б: 10:00 - історія"></textarea>
 
           <button type="button" onclick="addSchedule()">Додати</button>
         </section>

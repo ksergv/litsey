@@ -30,7 +30,9 @@ function slugify(value) {
 }
 
 async function loadJSON(path) {
-  const response = await fetch(path);
+ const response = await fetch(path + '?t=' + Date.now(), {
+  cache: 'no-store'
+});
 
   if (!response.ok) {
     throw new Error(`Не вдалося завантажити ${path}`);
@@ -48,7 +50,7 @@ async function loadNews() {
 
   try {
     const data = await loadJSON('../data/news.json');
-
+    data.sort((a, b) => new Date(a.date) - new Date(b.date));
     if (!data.length) {
       showError(element, 'Новини ще не додано.');
       return;
@@ -57,7 +59,7 @@ async function loadNews() {
     element.innerHTML = data.map(item => `
       <article class="card" id="${slugify(item.section)}">
         <p class="section-label">${escapeHTML(item.section || 'Новини')}</p>
-        <h2>${escapeHTML(item.title)}</h2>
+        <h2>${escapeHTML(item.title || '')}</h2>
         <small>${escapeHTML(item.date)}</small>
         <p>${formatText(item.text)}</p>
       </article>
@@ -96,25 +98,59 @@ async function loadPhotos() {
   }
 }
 
+let selectedClass = 'all';
+function setClassFilter(cls) {
+  selectedClass = cls;
+
+  document.querySelectorAll('.class-filter button').forEach(btn => {
+    btn.classList.remove('active');
+  });
+
+  event.target.classList.add('active');
+
+  loadSchedule();
+}
 async function loadSchedule() {
   const element = document.getElementById('schedule');
 
   try {
     const data = await loadJSON('../data/schedule.json');
+    data.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     if (!data.length) {
       showError(element, 'Розклад ще не додано.');
       return;
     }
 
-    element.innerHTML = data.map(item => `
-      <article class="card" id="${slugify(item.section)}">
-        <p class="section-label">${escapeHTML(item.section || 'Розклад')}</p>
-        <h2>${escapeHTML(item.title)}</h2>
-        <small>${escapeHTML(item.date)}</small>
-        <p>${formatText(item.text)}</p>
-      </article>
-    `).join('');
+    element.innerHTML = data.map(item => {
+      let content = '';
+
+      if (item.classes) {
+  let entries = Object.entries(item.classes);
+
+  if (selectedClass !== 'all') {
+    entries = entries.filter(([cls]) => cls === selectedClass);
+  }
+
+  content = entries.map(([cls, text]) => `
+    <p>
+      <strong>${escapeHTML(cls)}</strong><br>
+      ${formatText(text)}
+    </p>
+  `).join('');
+      } else {
+        content = `<p>${formatText(item.text)}</p>`;
+      }
+
+      return `
+        <article class="card" id="${slugify(item.section)}">
+          <p class="section-label">${escapeHTML(item.section || 'Розклад')}</p>
+          <h2>${escapeHTML(item.title || '')}</h2>
+          <small>${escapeHTML(item.date)}</small>
+          ${content}
+        </article>
+      `;
+    }).join('');
   } catch (error) {
     showError(element, error.message);
   }

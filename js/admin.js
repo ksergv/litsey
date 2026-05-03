@@ -108,20 +108,53 @@ function addNews() {
 }
 
 function addSchedule() {
-  const item = {
-    section: getValue('schedule-section') || 'Заняття',
-    title: getValue('schedule-title'),
-    date: getValue('schedule-date'),
-    text: getValue('schedule-text')
-  };
+  const section = getValue('schedule-section') || 'Заняття';
+  const type = getValue('schedule-type') || 'text';
+  const title = getValue('schedule-title');
+  const date = getValue('schedule-date');
+  const text = getValue('schedule-text');
+  const classesInput = getValue('schedule-classes');
 
-  if (!item.title || !item.text) {
-    alert('Заповніть заголовок і текст розкладу.');
-    return;
+  let item;
+
+  if (type === 'classes') {
+    const classes = classesInput
+      .split('\n')
+      .map(line => line.trim())
+      .filter(Boolean)
+      .reduce((acc, line) => {
+        const separatorIndex = line.indexOf(':');
+        if (separatorIndex === -1) {
+          return acc;
+        }
+
+        const cls = line.slice(0, separatorIndex).trim();
+        const value = line.slice(separatorIndex + 1).trim();
+
+        if (cls) {
+          acc[cls] = value;
+        }
+
+        return acc;
+      }, {});
+
+    if (!Object.keys(classes).length || !date) {
+      alert('Заповніть дату та список класів у форматі "Клас: розклад".');
+      return;
+    }
+
+    item = { section, date, classes };
+  } else {
+    if (!title || !text || !date) {
+      alert('Заповніть заголовок, дату та текст розкладу.');
+      return;
+    }
+
+    item = { section, title, date, text };
   }
 
   schedule.push(item);
-  clearFields(['schedule-title', 'schedule-date', 'schedule-text']);
+  clearFields(['schedule-title', 'schedule-date', 'schedule-text', 'schedule-classes']);
   renderPreview();
 }
 
@@ -248,13 +281,26 @@ function renderPreview() {
   }
 
   schedule.forEach((item, index) => {
+    let content = '';
+
+    if (item.classes) {
+      content = Object.entries(item.classes).map(([cls, text]) => `
+        <div class="class-block">
+          <strong>${escapeHTML(cls)}</strong>
+          <p>${formatText(text)}</p>
+        </div>
+      `).join('');
+    } else {
+      content = `<p>${formatText(item.text)}</p>`;
+    }
+
     element.innerHTML += `
       <div class="card admin-item">
         <div class="admin-item-content">
           <p class="section-label">${escapeHTML(item.section)}</p>
           <h3>${escapeHTML(item.title)}</h3>
           <small>${escapeHTML(item.date)}</small>
-          <p>${formatText(item.text)}</p>
+          ${content}
         </div>
         <button type="button" class="danger-button" onclick="deleteSchedule(${index})">Видалити</button>
       </div>

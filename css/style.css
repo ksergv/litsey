@@ -292,3 +292,21 @@ button:focus {
     grid-template-columns: 1fr;
   }
 }
+.class-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+  justify-content: center;
+}
+
+.class-filter button {
+  background: #e5f2e8;
+  color: #245c3a;
+  border: 1px solid #c4dfca;
+}
+
+.class-filter button.active {
+  background: #2f7d4c;
+  color: white;
+}
