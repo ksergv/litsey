@@ -3,43 +3,82 @@
     "section": "Заходи",
     "title": "Шкільні заходи",
     "images": [
-      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/sample.jpg",
-      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample.jpg",
-      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-2.jpg",
-      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-3.jpg",
-      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-4.jpg"
+      {
+        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/sample.jpg",
+        "caption": "Святковий виступ учнів"
+      },
+      {
+        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample.jpg",
+        "caption": "Підготовка до заходу"
+      },
+      {
+        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-2.jpg",
+        "caption": "Творчий номер"
+      },
+      {
+        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-3.jpg",
+        "caption": "Глядачі в актовій залі"
+      },
+      {
+        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-4.jpg",
+        "caption": "Загальна атмосфера свята"
+      }
     ]
   },
   {
     "section": "Уроки",
     "title": "Навчальні моменти",
     "images": [
-      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/casual",
-      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/models",
-      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/colored_pencils"
+      {
+        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/casual",
+        "caption": "Робота в класі"
+      },
+      {
+        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/models",
+        "caption": "Практичне завдання"
+      },
+      {
+        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/colored_pencils",
+        "caption": "Творчий процес"
+      }
     ]
   },
   {
     "section": "Шкільне життя",
     "title": "Життя ліцею",
     "images": [
-      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/shoes",
-      "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/camera",
-      "https://res-console.cloudinary.com/dos2lc5ns/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/YWN0aW9uX2NxMXh0bw==/template_primary"
+      {
+        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/shoes",
+        "caption": "Повсякденне життя"
+      },
+      {
+        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/camera",
+        "caption": "Фото з перерви"
+      },
+      {
+        "url": "https://res-console.cloudinary.com/dos2lc5ns/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/YWN0aW9uX2NxMXh0bw==/template_primary",
+        "caption": "Шкільні моменти"
+      }
     ]
   },
   {
     "section": "Заходи",
     "title": "1 сентября",
     "images": [
-      "https://res.cloudinary.com/dt4tkhpts/image/upload/v1777817829/DSC05927_k3ecls.jpg"
+      {
+        "url": "https://res.cloudinary.com/dt4tkhpts/image/upload/v1777817829/DSC05927_k3ecls.jpg",
+        "caption": "Свято першого дзвоника"
+      }
     ]
   },
   {
     "section": "Заходи",
     "title": "Шкільні заходи",
     "images": [
-      "https://res.cloudinary.com/dt4tkhpts/image/upload/v1777814532/Безымянный_qtjpht.png"
+      {
+        "url": "https://res.cloudinary.com/dt4tkhpts/image/upload/v1777814532/Безымянный_qtjpht.png",
+        "caption": "Загальний вигляд заходу"
+      }
     ]
   }
 ]

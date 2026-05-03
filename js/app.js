@@ -120,14 +120,19 @@ async function loadPhotos() {
         <p class="section-label">${escapeHTML(section.section || 'Фотографії')}</p>
         <h2>${escapeHTML(section.title)}</h2>
         <div class="photo-grid">
-          ${(section.images || []).map((image, index) => `
-  <div class="photo-item">
-    <a href="${escapeHTML(image)}" target="_blank" rel="noopener">
-      <img src="${escapeHTML(image)}" alt="Фото ${index + 1}" loading="lazy">
-    </a>
-    <p class="photo-caption">Фото ${index + 1}</p>
-  </div>
-`).join('')}
+          ${(section.images || []).map((image, index) => {
+  const url = typeof image === 'string' ? image : image.url;
+  const caption = typeof image === 'string' ? '' : image.caption;
+
+  return `
+    <div class="photo-item">
+      <a href="${escapeHTML(url)}" target="_blank" rel="noopener">
+        <img src="${escapeHTML(url)}" alt="${escapeHTML(caption || section.title)}" loading="lazy">
+      </a>
+      ${caption ? `<p class="photo-caption">${escapeHTML(caption)}</p>` : ''}
+    </div>
+  `;
+}).join('')}
         </div>
       </section>
     `).join('');
