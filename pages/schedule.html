@@ -23,12 +23,29 @@
       <a href="#tests">Контрольні</a>
     </div>
       <div class="class-filter">
-  <button onclick="setClassFilter('all')">Всі</button>
-  <button onclick="setClassFilter('11-А')">11-А</button>
-  <button onclick="setClassFilter('11-Б')">11-Б</button>
-  <button onclick="setClassFilter('11-В')">11-В</button>
-  <button onclick="setClassFilter('11-Г')">11-Г</button>
-  <button onclick="setClassFilter('11-Д')">11-Д</button>
+  <select id="gradeFilter" onchange="updateFilter()">
+    <option value="all">Всі класи</option>
+    <option value="1">1 клас</option>
+    <option value="2">2 клас</option>
+    <option value="3">3 клас</option>
+    <option value="4">4 клас</option>
+    <option value="5">5 клас</option>
+    <option value="6">6 клас</option>
+    <option value="7">7 клас</option>
+    <option value="8">8 клас</option>
+    <option value="9">9 клас</option>
+    <option value="10">10 клас</option>
+    <option value="11">11 клас</option>
+  </select>
+
+  <select id="letterFilter" onchange="updateFilter()">
+    <option value="all">Всі групи</option>
+    <option value="А">А</option>
+    <option value="Б">Б</option>
+    <option value="В">В</option>
+    <option value="Г">Г</option>
+    <option value="Д">Д</option>
+  </select>
 </div>
      
     <div id="schedule" class="content-list"></div>

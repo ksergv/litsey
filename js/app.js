@@ -98,18 +98,16 @@ async function loadPhotos() {
   }
 }
 
-let selectedClass = 'all';
-function setClassFilter(cls) {
-  selectedClass = cls;
 
-  document.querySelectorAll('.class-filter button').forEach(btn => {
-    btn.classList.remove('active');
-  });
-
-  event.target.classList.add('active');
+let selectedGrade = 'all';
+let selectedLetter = 'all';
+function updateFilter() {
+  selectedGrade = document.getElementById('gradeFilter').value;
+  selectedLetter = document.getElementById('letterFilter').value;
 
   loadSchedule();
 }
+
 async function loadSchedule() {
   const element = document.getElementById('schedule');
 
@@ -125,12 +123,23 @@ async function loadSchedule() {
     element.innerHTML = data.map(item => {
       let content = '';
 
-      if (item.classes) {
+     if (item.classes) {
   let entries = Object.entries(item.classes);
 
-  if (selectedClass !== 'all') {
-    entries = entries.filter(([cls]) => cls === selectedClass);
-  }
+  entries = entries.filter(([cls]) => {
+    // cls = "11-А"
+    const [grade, letter] = cls.split('-');
+
+    if (selectedGrade !== 'all' && grade !== selectedGrade) {
+      return false;
+    }
+
+    if (selectedLetter !== 'all' && letter !== selectedLetter) {
+      return false;
+    }
+
+    return true;
+  });
 
   content = entries.map(([cls, text]) => `
     <p>
