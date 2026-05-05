@@ -177,8 +177,7 @@ async function loadPhotos() {
 
   return `
     <div class="photo-item">
-      <a href="${escapeHTML(url)}" target="_blank" rel="noopener">
-       <img 
+      <img 
   src="${escapeHTML(url)}"
   onclick="openLightbox('${escapeHTML(url)}', '${escapeHTML(caption || '')}')"
   style="cursor:pointer"
