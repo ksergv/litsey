@@ -23,6 +23,12 @@
      <a href="#" onclick="showPhotoSection('school-life', event)">Шкільне життя</a>
     </div>
     <div id="photos" class="photo-sections"></div>
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-content" onclick="event.stopPropagation()">
+    <img id="lightbox-img">
+    <p id="lightbox-caption"></p>
+  </div>
+</div>
   </main>
 
   <footer class="footer">

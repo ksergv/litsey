@@ -128,6 +128,16 @@ async function loadNews() {
 }
 }
 
+function openLightbox(url, caption) {
+  document.getElementById('lightbox-img').src = url;
+  document.getElementById('lightbox-caption').textContent = caption || '';
+  document.getElementById('lightbox').classList.add('active');
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+}
+
 function showPhotoSection(sectionId, event) {
   event.preventDefault();
 
@@ -168,9 +178,11 @@ async function loadPhotos() {
   return `
     <div class="photo-item">
       <a href="${escapeHTML(url)}" target="_blank" rel="noopener">
-        <img src="${escapeHTML(url)}" alt="${escapeHTML(caption || section.title)}" loading="lazy">
-      </a>
-      ${caption ? `<p class="photo-caption">${escapeHTML(caption)}</p>` : ''}
+       <img 
+  src="${escapeHTML(url)}"
+  onclick="openLightbox('${escapeHTML(url)}', '${escapeHTML(caption || '')}')"
+  style="cursor:pointer"
+>
     </div>
   `;
 }).join('')}
