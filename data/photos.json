@@ -4,24 +4,12 @@
     "title": "Шкільні заходи",
     "images": [
       {
-        "url": "function startEditSchedule(index) {   editingScheduleIndex = index;   renderPreview(); }  function cancelEditSchedule() {   editingScheduleIndex = null;   renderPreview(); }  function saveSchedule(index) {   const item = schedule[index];    item.section = document.getElementById(`edit-schedule-section-${index}`).value;   item.date = document.getElementById(`edit-schedule-date-${index}`).value;    if (item.title !== undefined) {     item.title = document.getElementById(`edit-schedule-title-${index}`).value;   }    if (item.text !== undefined) {     item.text = document.getElementById(`edit-schedule-text-${index}`).value;   }    if (item.classes) {     const raw = document.getElementById(`edit-schedule-classes-${index}`).value;      const classes = {};      raw.split('\\n').forEach(line => {       const [k, v] = line.split(':');       if (k && v) {         classes[k.trim()] = v.trim();       }     });      item.classes = classes;   }    editingScheduleIndex = null;   renderPreview(); }",
-        "caption": "Учні 6-х класів на уроці «Пізнаємо природу» створювали справжню екомайстерню 🌿♻️"
+        "url": "https://res.cloudinary.com/dos2lc5ns/image/upload/v1777975796/62abae73-67e0-430b-8fd9-4374a66cd11f_hzqaw7.jpg",
+        "caption": "Учні 6-х класів на уроці «Пізнаємо природу» створювали справжню екомайстерню 🌿♻️ З підручних матеріалів виготовили яскраві та зручні контейнери для сортування сміття. Кожен — зі своїм дизайном, ідеєю та важливим посланням 💡"
       },
       {
-        "url": "Учні 6-х класів на уроці «Пізнаємо природу» створювали справжню екомайстерню 🌿♻️ З підручних матеріалів виготовили яскраві та зручні контейнери для сортування сміття. Кожен — зі своїм дизайном, ідеєю та важливим посланням 💡 Маленькі кроки — великі результати. Саме з таких ініціатив починається чистіше довкілля, відповідальність і любов до нашої планети",
+        "url": "https://res.cloudinary.com/dos2lc5ns/image/upload/v1777976020/cd59a9a8-27ca-4499-93e8-c4960b4c96db_c8bjnj.jpg",
         "caption": "До Всесвітнього дня імунізації медичними сестрами було проведено інформаційно-просвітницьку бесіду з учнями навчального закладу.Тема 2026 року «Вакцини захищають кожне покоління »"
-      },
-      {
-        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-2.jpg",
-        "caption": "Творчий номер"
-      },
-      {
-        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-3.jpg",
-        "caption": "Глядачі в актовій залі"
-      },
-      {
-        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/cld-sample-4.jpg",
-        "caption": "Загальна атмосфера свята"
       }
     ]
   },
@@ -48,10 +36,6 @@
     "title": "Життя ліцею",
     "images": [
       {
-        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/shoes",
-        "caption": "Повсякденне життя"
-      },
-      {
         "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/camera",
         "caption": "Фото з перерви"
       },
@@ -68,16 +52,6 @@
       {
         "url": "https://res.cloudinary.com/dt4tkhpts/image/upload/v1777817829/DSC05927_k3ecls.jpg",
         "caption": "Свято першого дзвоника"
-      }
-    ]
-  },
-  {
-    "section": "Заходи",
-    "title": "Шкільні заходи",
-    "images": [
-      {
-        "url": "https://res.cloudinary.com/dt4tkhpts/image/upload/v1777814532/Безымянный_qtjpht.png",
-        "caption": "Загальний вигляд заходу"
       }
     ]
   }
