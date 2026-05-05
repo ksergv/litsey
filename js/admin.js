@@ -4,6 +4,9 @@ let news = [];
 let photos = [];
 let schedule = [];
 let dataLoaded = false;
+let editingNewsIndex = null;
+let editingPhotoIndex = null;
+let editingScheduleIndex = null;
 
 function escapeHTML(value) {
   return String(value ?? '')
@@ -249,22 +252,104 @@ function deletePhoto(sectionIndex, imageIndex) {
   renderPreview();
 }
 
-function renderPhotoPreview(item) {
-  return `
-    <section class="photo-section">
-      <p class="section-label">${escapeHTML(item.section)}</p>
-      <h2>${escapeHTML(item.title)}</h2>
-      <div class="photo-grid">
-        ${item.images.map(img => `
-          <div class="photo-item">
-            <img src="${escapeHTML(img.url)}">
-            <p class="photo-caption">${escapeHTML(img.caption || '')}</p>
-          </div>
-        `).join('')}
-      </div>
-    </section>
-  `;
+
+
+function startEditNews(index) {
+  editingNewsIndex = index;
+  renderPreview();
 }
+
+function cancelEditNews() {
+  editingNewsIndex = null;
+  renderPreview();
+}
+
+function saveNews(index) {
+  news[index].title = document.getElementById(`edit-news-title-${index}`).value;
+  news[index].date = document.getElementById(`edit-news-date-${index}`).value;
+  news[index].text = document.getElementById(`edit-news-text-${index}`).value;
+
+  editingNewsIndex = null;
+  renderPreview();
+}
+
+function startEditPhotos(index) {
+  editingPhotoIndex = index;
+  renderPreview();
+}
+
+function cancelEditPhotos() {
+  editingPhotoIndex = null;
+  renderPreview();
+}
+
+function savePhotos(index) {
+  const section = photos[index];
+
+  section.title = document.getElementById(`edit-photo-title-${index}`).value;
+
+  section.images = section.images.map((img, i) => ({
+    url: document.getElementById(`edit-photo-url-${index}-${i}`).value,
+    caption: document.getElementById(`edit-photo-caption-${index}-${i}`).value
+  }));
+
+  editingPhotoIndex = null;
+  renderPreview();
+}
+
+function editPhotoCaption(sectionIndex, imageIndex) {
+  const img = photos[sectionIndex].images[imageIndex];
+
+  const newCaption = prompt('Підпис', img.caption);
+  if (newCaption === null) return;
+
+  img.caption = newCaption;
+
+  renderPreview();
+}
+function startEditSchedule(index) {
+  editingScheduleIndex = index;
+  renderPreview();
+}
+
+function cancelEditSchedule() {
+  editingScheduleIndex = null;
+  renderPreview();
+}
+
+function saveSchedule(index) {
+  const item = schedule[index];
+
+  item.section = document.getElementById(`edit-schedule-section-${index}`).value;
+  item.date = document.getElementById(`edit-schedule-date-${index}`).value;
+
+  if (item.title !== undefined) {
+    item.title = document.getElementById(`edit-schedule-title-${index}`).value;
+  }
+
+  if (item.text !== undefined) {
+    item.text = document.getElementById(`edit-schedule-text-${index}`).value;
+  }
+
+  if (item.classes) {
+    const raw = document.getElementById(`edit-schedule-classes-${index}`).value;
+
+    const classes = {};
+
+    raw.split('\n').forEach(line => {
+      const [k, v] = line.split(':');
+      if (k && v) {
+        classes[k.trim()] = v.trim();
+      }
+    });
+
+    item.classes = classes;
+  }
+
+  editingScheduleIndex = null;
+  renderPreview();
+}
+
 function renderPreview() {
   const element = document.getElementById('preview');
   element.innerHTML = '';
@@ -279,50 +364,88 @@ function renderPreview() {
 
   const grouped = {};
 
-  news.forEach(item => {
-    if (!grouped[item.section]) {
-      grouped[item.section] = [];
-    }
-    grouped[item.section].push(item);
-  });
-
-  Object.entries(grouped).forEach(([section, items]) => {
-    element.innerHTML += `<h4>${escapeHTML(section)}</h4>`;
-
-   items.forEach(item => {
-  const globalIndex = news.indexOf(item);
-      element.innerHTML += `
-        <div class="card admin-item">
-          <div class="admin-item-content">
-            <p class="section-label">${escapeHTML(item.section)}</p>
-            <h3>${escapeHTML(item.title)}</h3>
-            <small>${escapeHTML(item.date)}</small>
-            <p>${formatText(item.text)}</p>
-          </div>
-          <button type="button" class="danger-button" onclick="deleteNews(${globalIndex})"">
-            Видалити
-          </button>
+ news.forEach((item, index) => {
+  if (editingNewsIndex === index) {
+    element.innerHTML += `
+      <div class="card admin-item">
+        <div class="admin-item-content">
+          <input id="edit-news-title-${index}" value="${escapeHTML(item.title)}">
+          <input type="date" id="edit-news-date-${index}" value="${escapeHTML(item.date)}">
+          <textarea id="edit-news-text-${index}">${escapeHTML(item.text)}</textarea>
         </div>
-      `;
-    });
-  });
+
+        <div class="button-row">
+          <button onclick="saveNews(${index})">Зберегти</button>
+          <button onclick="cancelEditNews()">Скасувати</button>
+        </div>
+      </div>
+    `;
+  } else {
+    element.innerHTML += `
+      <div class="card admin-item">
+        <div class="admin-item-content">
+          <p class="section-label">${escapeHTML(item.section)}</p>
+          <h3>${escapeHTML(item.title)}</h3>
+          <small>${escapeHTML(item.date)}</small>
+          <p>${formatText(item.text)}</p>
+        </div>
+
+        <div class="button-row">
+          <button onclick="startEditNews(${index})">Редагувати</button>
+          <button class="danger-button" onclick="deleteNews(${index})">Видалити</button>
+        </div>
+      </div>
+    `;
+  }
+});
 }
 
   if (photos.length) {
   element.innerHTML += '<h3>Фотографії</h3>';
 }
+photos.forEach((item, sectionIndex) => {
 
-photos.forEach((item, index) => {
-  element.innerHTML += `
-    <div class="card admin-item">
-      <div class="admin-item-content">
-        ${renderPhotoPreview(item)}
+  if (editingPhotoIndex === sectionIndex) {
+    element.innerHTML += `
+      <div class="card admin-item">
+        <input id="edit-photo-title-${sectionIndex}" value="${escapeHTML(item.title)}">
+
+        ${item.images.map((img, i) => `
+          <div class="photo-row">
+            <input id="edit-photo-url-${sectionIndex}-${i}" value="${escapeHTML(img.url)}">
+            <input id="edit-photo-caption-${sectionIndex}-${i}" value="${escapeHTML(img.caption || '')}">
+          </div>
+        `).join('')}
+
+        <div class="button-row">
+          <button onclick="savePhotos(${sectionIndex})">Зберегти</button>
+          <button onclick="cancelEditPhotos()">Скасувати</button>
+        </div>
       </div>
-      <button type="button" class="danger-button" onclick="deletePhotoSection(${index})">
-        Видалити
-      </button>
-    </div>
-  `;
+    `;
+  } else {
+    element.innerHTML += `
+      <div class="card admin-item">
+        <div class="admin-item-content">
+          <h3>${escapeHTML(item.title)}</h3>
+
+          <div class="photo-grid">
+            ${item.images.map(img => `
+              <div class="photo-item">
+                <img src="${escapeHTML(img.url)}">
+                <p>${escapeHTML(img.caption || '')}</p>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button onclick="startEditPhotos(${sectionIndex})">Редагувати</button>
+          <button class="danger-button" onclick="deletePhotoSection(${sectionIndex})">Видалити</button>
+        </div>
+      </div>
+    `;
+  }
 });
  
 
@@ -331,6 +454,46 @@ photos.forEach((item, index) => {
   }
 
   schedule.forEach((item, index) => {
+
+  if (editingScheduleIndex === index) {
+
+    // режим редактирования
+    element.innerHTML += `
+      <div class="card admin-item">
+
+        <select id="edit-schedule-section-${index}">
+          <option ${item.section === 'Заняття' ? 'selected' : ''}>Заняття</option>
+          <option ${item.section === 'Заходи' ? 'selected' : ''}>Заходи</option>
+          <option ${item.section === 'Контрольні' ? 'selected' : ''}>Контрольні</option>
+        </select>
+
+        <input type="date" id="edit-schedule-date-${index}" value="${escapeHTML(item.date)}">
+
+        ${item.title !== undefined ? `
+          <input id="edit-schedule-title-${index}" value="${escapeHTML(item.title || '')}">
+        ` : ''}
+
+        ${item.text !== undefined ? `
+          <textarea id="edit-schedule-text-${index}">${escapeHTML(item.text)}</textarea>
+        ` : ''}
+
+        ${item.classes ? `
+          <textarea id="edit-schedule-classes-${index}">
+${Object.entries(item.classes).map(([k, v]) => `${k}: ${v}`).join('\n')}
+          </textarea>
+        ` : ''}
+
+        <div class="button-row">
+          <button onclick="saveSchedule(${index})">Зберегти</button>
+          <button onclick="cancelEditSchedule()">Скасувати</button>
+        </div>
+
+      </div>
+    `;
+
+  } else {
+
+    // обычный режим
     let content = '';
 
     if (item.classes) {
@@ -348,14 +511,19 @@ photos.forEach((item, index) => {
       <div class="card admin-item">
         <div class="admin-item-content">
           <p class="section-label">${escapeHTML(item.section)}</p>
-          <h3>${escapeHTML(item.title)}</h3>
+          <h3>${escapeHTML(item.title || '')}</h3>
           <small>${escapeHTML(item.date)}</small>
           ${content}
         </div>
-        <button type="button" class="danger-button" onclick="deleteSchedule(${index})">Видалити</button>
+
+        <div class="button-row">
+          <button onclick="startEditSchedule(${index})">Редагувати</button>
+          <button class="danger-button" onclick="deleteSchedule(${index})">Видалити</button>
+        </div>
       </div>
     `;
-  });
+  }
+});
 }
 
 function downloadFile(filename, data) {
