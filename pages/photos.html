@@ -23,14 +23,17 @@
      <a href="#" onclick="showPhotoSection('school-life', event)">Шкільне життя</a>
     </div>
     <div id="photos" class="photo-sections"></div>
-    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    
+  </main>
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
   <div class="lightbox-content" onclick="event.stopPropagation()">
+
+    <button class="lightbox-close" onclick="closeLightbox()">×</button>
+
     <img id="lightbox-img">
     <p id="lightbox-caption"></p>
   </div>
 </div>
-  </main>
-
   <footer class="footer">
     <div class="footer-content">
       <p>© 2026 Південноукраїнський ліцей №3</p>

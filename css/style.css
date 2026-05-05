@@ -195,6 +195,30 @@ h1 {
   color: #fff;
   font-size: 16px;
 }
+.lightbox-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.lightbox-close:hover {
+  opacity: 0.7;
+}
+
+.lightbox-content {
+  position: relative;
+}
+#lightbox-caption {
+  margin-top: 10px;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+}
 .footer {
   margin-top: auto;
   background: #2f7d4c;
