@@ -274,23 +274,39 @@ function renderPreview() {
     return;
   }
 
-  if (news.length) {
-    element.innerHTML += '<h3>Новини</h3>';
-  }
+ if (news.length) {
+  element.innerHTML += '<h3>Новини</h3>';
 
-  news.forEach((item, index) => {
-    element.innerHTML += `
-      <div class="card admin-item">
-        <div class="admin-item-content">
-          <p class="section-label">${escapeHTML(item.section)}</p>
-          <h3>${escapeHTML(item.title)}</h3>
-          <small>${escapeHTML(item.date)}</small>
-          <p>${formatText(item.text)}</p>
-        </div>
-        <button type="button" class="danger-button" onclick="deleteNews(${index})">Видалити</button>
-      </div>
-    `;
+  const grouped = {};
+
+  news.forEach(item => {
+    if (!grouped[item.section]) {
+      grouped[item.section] = [];
+    }
+    grouped[item.section].push(item);
   });
+
+  Object.entries(grouped).forEach(([section, items]) => {
+    element.innerHTML += `<h4>${escapeHTML(section)}</h4>`;
+
+   items.forEach(item => {
+  const globalIndex = news.indexOf(item);
+      element.innerHTML += `
+        <div class="card admin-item">
+          <div class="admin-item-content">
+            <p class="section-label">${escapeHTML(item.section)}</p>
+            <h3>${escapeHTML(item.title)}</h3>
+            <small>${escapeHTML(item.date)}</small>
+            <p>${formatText(item.text)}</p>
+          </div>
+          <button type="button" class="danger-button" onclick="deleteNews(${globalIndex})"">
+            Видалити
+          </button>
+        </div>
+      `;
+    });
+  });
+}
 
   if (photos.length) {
   element.innerHTML += '<h3>Фотографії</h3>';
