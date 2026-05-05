@@ -155,6 +155,12 @@ h1 {
   color: #697780;
 }
 
+.section-title {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #2f7d4c;
+  text-align: center;
+}
 .footer {
   margin-top: auto;
   background: #2f7d4c;

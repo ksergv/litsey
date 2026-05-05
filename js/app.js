@@ -62,29 +62,70 @@ function showError(target, message) {
     if (target) target.innerHTML = html;
   }
 }
+let selectedNewsSection = 'all';
+function showNewsSection(section, event) {
+  event.preventDefault();
 
+  selectedNewsSection = section;
+
+  document.querySelectorAll('.subnav a').forEach(a => {
+    a.classList.remove('active');
+  });
+
+  event.target.classList.add('active');
+
+  loadNews();
+}
 async function loadNews() {
   const element = document.getElementById('news');
+  element.innerHTML = '';
 
   try {
     const data = await loadJSON('../data/news.json');
+
     data.sort((a, b) => new Date(a.date) - new Date(b.date));
+
     if (!data.length) {
       showError(element, 'Новини ще не додано.');
       return;
     }
 
-    element.innerHTML = data.map(item => `
-      <article class="card" id="${slugify(item.section)}">
-        <p class="section-label">${escapeHTML(item.section || 'Новини')}</p>
-        <h2>${escapeHTML(item.title || '')}</h2>
-        <small>${escapeHTML(item.date)}</small>
-        <p>${formatText(item.text)}</p>
-      </article>
-    `).join('');
+    let filteredData = data;
+
+  if (selectedNewsSection !== 'all') {
+    filteredData = data.filter(item => item.section === selectedNewsSection);
+  }
+   const grouped = {};
+
+    filteredData.forEach(item => {
+      if (!grouped[item.section]) {
+        grouped[item.section] = [];
+      }
+      grouped[item.section].push(item);
+    });
+
+    Object.entries(grouped).forEach(([section, items]) => {
+      element.innerHTML += `
+        <h2 class="section-title">${escapeHTML(section)}</h2>
+      `;
+
+      element.innerHTML += items.map(item => `
+        <article class="card">
+          <p class="section-label">${escapeHTML(item.section || 'Новини')}</p>
+          <h3>${escapeHTML(item.title)}</h3>
+          <small>${escapeHTML(item.date)}</small>
+          <p>${formatText(item.text)}</p>
+        </article>
+      `).join('');
+    });
+
   } catch (error) {
     showError(element, error.message);
   }
+  if (!document.querySelector('.subnav a.active')) {
+  const first = document.querySelector('.subnav a');
+  if (first) first.classList.add('active');
+}
 }
 
 function showPhotoSection(sectionId, event) {

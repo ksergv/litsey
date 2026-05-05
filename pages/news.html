@@ -17,11 +17,12 @@
 
   <main class="container">
     <h1>Новини</h1>
-    <div class="subnav" aria-label="Розділи новин">
-      <a href="#announcements">Оголошення</a>
-      <a href="#events">Події</a>
-      <a href="#achievements">Досягнення</a>
-    </div>
+    <div class="subnav">
+    <a href="#" onclick="showNewsSection('all', event)">Всі</a>
+    <a href="#" onclick="showNewsSection('Оголошення', event)">Оголошення</a>
+    <a href="#" onclick="showNewsSection('Події', event)">Події</a>
+    <a href="#" onclick="showNewsSection('Досягнення', event)">Досягнення</a>
+  </div>
     <div id="news" class="content-list"></div>
   </main>
 
