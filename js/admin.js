@@ -467,9 +467,11 @@ photos.forEach((item, sectionIndex) => {
         ` : ''}
 
         ${item.classes ? `
-          <textarea id="edit-schedule-classes-${index}">
-${Object.entries(item.classes).map(([k, v]) => `${k}: ${v}`).join('\n')}
-          </textarea>
+         <textarea id="edit-schedule-classes-${index}">${escapeHTML(
+          Object.entries(item.classes)
+            .map(([k, v]) => `${k}: ${v}`)
+            .join('\n')
+        )}</textarea>
         ` : ''}
 
         <div class="button-row">
