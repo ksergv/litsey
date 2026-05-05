@@ -181,7 +181,9 @@ h1 {
   max-height: 90%;
   text-align: center;
 }
-
+.lightbox {
+  transition: opacity 0.2s;
+}
 .lightbox img {
   max-width: 100%;
   max-height: 80vh;

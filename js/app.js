@@ -129,6 +129,11 @@ async function loadNews() {
 }
 
 function openLightbox(url, caption) {
+  scrollPosition = window.scrollY;
+
+  document.body.style.top = `-${scrollPosition}px`;
+  document.body.style.position = 'fixed';
+
   document.getElementById('lightbox-img').src = url;
   document.getElementById('lightbox-caption').textContent = caption || '';
   document.getElementById('lightbox').classList.add('active');
@@ -136,6 +141,11 @@ function openLightbox(url, caption) {
 
 function closeLightbox() {
   document.getElementById('lightbox').classList.remove('active');
+
+  document.body.style.position = '';
+  document.body.style.top = '';
+
+  window.scrollTo(0, scrollPosition);
 }
 
 function showPhotoSection(sectionId, event) {
