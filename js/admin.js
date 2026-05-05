@@ -404,48 +404,37 @@ function renderPreview() {
   element.innerHTML += '<h3>Фотографії</h3>';
 }
 photos.forEach((item, sectionIndex) => {
+  element.innerHTML += `
+    <div class="card admin-item">
+      <div class="admin-item-content">
+        <p class="section-label">${escapeHTML(item.section)}</p>
+        <h3>${escapeHTML(item.title)}</h3>
 
-  if (editingPhotoIndex === sectionIndex) {
-    element.innerHTML += `
-      <div class="card admin-item">
-        <input id="edit-photo-title-${sectionIndex}" value="${escapeHTML(item.title)}">
+        <div class="photo-grid">
+          ${item.images.map((img, i) => `
+            <div class="photo-item">
+              <img src="${escapeHTML(img.url)}">
+              <p>${escapeHTML(img.caption || '')}</p>
 
-        ${item.images.map((img, i) => `
-          <div class="photo-row">
-            <input id="edit-photo-url-${sectionIndex}-${i}" value="${escapeHTML(img.url)}">
-            <input id="edit-photo-caption-${sectionIndex}-${i}" value="${escapeHTML(img.caption || '')}">
-          </div>
-        `).join('')}
-
-        <div class="button-row">
-          <button onclick="savePhotos(${sectionIndex})">Зберегти</button>
-          <button onclick="cancelEditPhotos()">Скасувати</button>
-        </div>
-      </div>
-    `;
-  } else {
-    element.innerHTML += `
-      <div class="card admin-item">
-        <div class="admin-item-content">
-          <h3>${escapeHTML(item.title)}</h3>
-
-          <div class="photo-grid">
-            ${item.images.map(img => `
-              <div class="photo-item">
-                <img src="${escapeHTML(img.url)}">
-                <p>${escapeHTML(img.caption || '')}</p>
+              <div class="button-row">
+                <button onclick="editPhotoCaption(${sectionIndex}, ${i})">Редагувати</button>
+                <button class="danger-button" onclick="deletePhoto(${sectionIndex}, ${i})">
+                  Видалити
+                </button>
               </div>
-            `).join('')}
-          </div>
-        </div>
-
-        <div class="button-row">
-          <button onclick="startEditPhotos(${sectionIndex})">Редагувати</button>
-          <button class="danger-button" onclick="deletePhotoSection(${sectionIndex})">Видалити</button>
+            </div>
+          `).join('')}
         </div>
       </div>
-    `;
-  }
+
+      <div class="button-row">
+        <button onclick="startEditPhotos(${sectionIndex})">Редагувати блок</button>
+        <button class="danger-button" onclick="deletePhotoSection(${sectionIndex})">
+          Видалити блок
+        </button>
+      </div>
+    </div>
+  `;
 });
  
 
