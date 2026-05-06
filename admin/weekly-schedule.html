@@ -472,10 +472,25 @@ if (!adminKey) {
 
   document.addEventListener('DOMContentLoaded', async () => {
 
-   
-    await loadExistingSchedules();
+   await loadExistingSchedules();
 
-    renderScheduleTable('Понеділок');
+if (allSchedules.length) {
+
+  const firstClass = allSchedules[0].class;
+
+  const select = document.getElementById(
+    'schedule-class'
+  );
+
+  select.value = firstClass;
+
+  loadClassSchedule();
+
+} else {
+
+  renderScheduleTable('Понеділок');
+
+}
 
     document.querySelector('.schedule-days button')
       .classList.add('active');
