@@ -338,72 +338,95 @@ async function loadWeeklySchedule() {
         '<p class="empty">Розклад ще не додано.</p>';
 
       return;
+
     }
 
-    element.innerHTML = data.map(item => `
+    element.innerHTML = data.map(item => {
 
-      <article class="card">
+      const daysHTML = Object.entries(item.week)
 
-        <h2>${escapeHTML(item.class)}</h2>
+        .map(([day, lessons]) => {
 
-        ${Object.entries(item.week).map(([day, lessons]) => `
+          // удаляем пустые уроки
+          const filteredLessons = lessons.filter(
+            lesson => lesson.subject.trim()
+          );
 
-          <div class="schedule-day">
+          // скрываем пустой день
+          if (!filteredLessons.length) {
+            return '';
+          }
 
-            <h3>${day}</h3>
+          return `
 
-            <table class="schedule-table">
+            <div class="schedule-day">
 
-              <thead>
-                <tr>
-                  <th>№</th>
-                  <th>Предмет</th>
-                  <th>Час</th>
-                  <th>Кабінет</th>
-                  <th>Примітка</th>
-                </tr>
-              </thead>
+              <h3>${escapeHTML(day)}</h3>
 
-              <tbody>
+              <table class="schedule-table">
 
-                ${lessons.map(lesson => `
-
+                <thead>
                   <tr>
-
-                    <td>${lesson.lesson}</td>
-
-                    <td>${escapeHTML(lesson.subject)}</td>
-
-                    <td>${escapeHTML(lesson.time)}</td>
-
-                    <td>${escapeHTML(lesson.room)}</td>
-
-                    <td>${escapeHTML(lesson.note || '')}</td>
-
+                    <th>№</th>
+                    <th>Предмет</th>
+                    <th>Час</th>
+                    <th>Кабінет</th>
+                    <th>Примітка</th>
                   </tr>
+                </thead>
 
-                `).join('')}
+                <tbody>
 
-              </tbody>
+                  ${filteredLessons.map(lesson => `
 
-            </table>
+                    <tr>
 
-          </div>
+                      <td>${lesson.lesson}</td>
 
-        `).join('')}
+                      <td>${escapeHTML(lesson.subject)}</td>
 
-        ${item.general_note
-          ? `
-            <p class="schedule-note">
-              ${escapeHTML(item.general_note)}
-            </p>
-          `
-          : ''
-        }
+                      <td>${escapeHTML(lesson.time)}</td>
 
-      </article>
+                      <td>${escapeHTML(lesson.room)}</td>
 
-    `).join('');
+                      <td>${escapeHTML(lesson.note || '')}</td>
+
+                    </tr>
+
+                  `).join('')}
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          `;
+
+        }).join('');
+
+      return `
+
+        <article class="card">
+
+          <h2>${escapeHTML(item.class)}</h2>
+
+          ${daysHTML}
+
+          ${item.general_note
+            ? `
+              <p class="schedule-note">
+                ${escapeHTML(item.general_note)}
+              </p>
+            `
+            : ''
+          }
+
+        </article>
+
+      `;
+
+    }).join('');
 
   } catch (error) {
 
