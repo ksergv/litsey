@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Адміністратор | Південноукраїнський ліцей №3</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <nav class="menu">
+    <a href="../index.html">Головна</a>
+    <a href="../pages/news.html">Новини</a>
+    <a href="../pages/photos.html">Фотографії</a>
+    <a href="../pages/schedule.html">Розклад</a>
+  </nav>
+
+  <main class="container">
+    <section id="login" class="admin-panel">
+      <h1>Вхід адміністратора</h1>
+      <p class="lead">Розділ лише для підготовки матеріалів сайту.</p>
+      <label for="password">Пароль</label>
+      <input type="password" id="password" autocomplete="current-password">
+      <button type="button" onclick="checkPassword()">Увійти</button>
+    </section>
+
+    <section id="admin" style="display:none;">
+      <h1>Адмін-панель</h1>
+      <div class="button-row">
+        <button type="button" onclick="logout()">Вийти</button>
+      </div>
+
+      <div class="admin-layout">
+        <section class="admin-panel">
+          <h2>Додати новину</h2>
+
+          <label for="news-section">Розділ</label>
+          <select id="news-section">
+            <option>Оголошення</option>
+            <option>Події</option>
+            <option>Досягнення</option>
+          </select>
+
+          <label for="news-title">Заголовок</label>
+          <input id="news-title" placeholder="Наприклад: Перемога в конкурсі">
+
+          <label for="news-date">Дата</label>
+          <input id="news-date" type="date">
+
+          <label for="news-text">Текст</label>
+          <textarea id="news-text" placeholder="Короткий опис новини"></textarea>
+
+          <button type="button" onclick="addNews()">Додати</button>
+        </section>
+
+        <section class="admin-panel">
+          <h2>Додати фотографії</h2>
+
+          <label for="photo-section">Розділ</label>
+          <select id="photo-section">
+            <option>Заходи</option>
+            <option>Уроки</option>
+            <option>Шкільне життя</option>
+          </select>
+
+          <label for="photo-title">Назва блоку</label>
+          <input id="photo-title" placeholder="Наприклад: День знань">
+
+          <label for="photo-urls">Посилання Cloudinary</label>
+          <div id="photo-list"></div>
+
+<button type="button" onclick="addPhotoRow()">Ввести данные/Додати фото</button>
+        </section>
+
+        <section class="admin-panel">
+          <h2>Додати розклад</h2>
+
+          <label for="schedule-section">Розділ</label>
+          <select id="schedule-section">
+            <option>Заняття</option>
+            <option>Заходи</option>
+            <option>Контрольні</option>
+          </select>
+
+          <label for="schedule-type">Тип запису</label>
+          <select id="schedule-type">
+            <option value="text">Текст</option>
+            <option value="classes">За класами</option>
+          </select>
+
+          <label for="schedule-title">Заголовок</label>
+          <input id="schedule-title" placeholder="Наприклад: Понеділок">
+
+          <label for="schedule-date">Дата</label>
+          <input id="schedule-date" type="date">
+
+          <label for="schedule-text">Текст</label>
+          <textarea id="schedule-text" placeholder="Час та опис"></textarea>
+
+          <label for="schedule-classes">Класи та розклад</label>
+          <textarea id="schedule-classes" placeholder="11-А: 10:00 - математика\n11-Б: 10:00 - історія"></textarea>
+
+          <button type="button" onclick="addSchedule()">Додати</button>
+        </section>
+      </div>
+
+      <section class="admin-panel">
+        <h2>Попередній перегляд</h2>
+        <div id="preview">
+          <p class="empty">Матеріали ще не додано.</p>
+        </div>
+      </section>
+    
+
+      <section class="admin-panel save-panel">
+        <h2>Збереження</h2>
+        <p>Адмінка завантажує поточні дані з папки <strong>data</strong>. Після додавання або видалення матеріалів скачаний JSON міститиме всі поточні записи.</p>
+       
+        <h3>Відправити на GitHub через Vercel</h3>
+        <label for="admin-api-key">Ключ адміністратора Vercel API</label>
+        <!--<input type="password" id="admin-api-key" autocomplete="off" placeholder="ADMIN_API_KEY">
+      -->
+        <input 
+          type="password" 
+          id="admin-api-key" 
+          value="litsey-admin-2026-long-secret-key" 
+          autocomplete="off" 
+        >
+        
+        <div class="button-row">
+          <button type="button" onclick="publishNewsJSON()">Відправити news.json</button>
+          <button type="button" onclick="publishPhotosJSON()">Відправити photos.json</button>
+          <button type="button" onclick="publishScheduleJSON()">Відправити schedule.json</button>
+          <button type="button" onclick="publishAllJSON()">Відправити все</button>
+        </div>
+        <p id="api-status" class="status-text"></p>
+      </section>
+    </section>
+  </main>
+
+  <script src="../js/admin.js"></script>
+</body>
+</html>
