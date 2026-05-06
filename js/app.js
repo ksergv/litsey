@@ -296,16 +296,12 @@ async function loadSchedule() {
       return true;
     });
 
-    const classesData = filteredData.filter(i => i.section === 'Заняття');
+    
     const eventsData = filteredData.filter(i => i.section === 'Заходи');
     const testsData = filteredData.filter(i => i.section === 'Контрольні');
 
     // Заняття
-    if (!classesData.length) {
-      classesEl.innerHTML = '<p class="empty">Немає занять</p>';
-    } else {
-      classesEl.innerHTML = renderScheduleList(classesData);
-    }
+    loadWeeklySchedule()
 
     // Заходи
     if (!eventsData.length) {
@@ -327,4 +323,91 @@ async function loadSchedule() {
     showError(testsEl, error.message);
   }
   showSection('classes', { preventDefault: () => {}, target: document.querySelector('.subnav a') });
+}
+async function loadWeeklySchedule() {
+
+  const element = document.getElementById('classes');
+
+  try {
+
+    const data = await loadJSON('/data/weekly-schedule.json');
+
+    if (!data.length) {
+
+      element.innerHTML =
+        '<p class="empty">Розклад ще не додано.</p>';
+
+      return;
+    }
+
+    element.innerHTML = data.map(item => `
+
+      <article class="card">
+
+        <h2>${escapeHTML(item.class)}</h2>
+
+        ${Object.entries(item.week).map(([day, lessons]) => `
+
+          <div class="schedule-day">
+
+            <h3>${day}</h3>
+
+            <table class="schedule-table">
+
+              <thead>
+                <tr>
+                  <th>№</th>
+                  <th>Предмет</th>
+                  <th>Час</th>
+                  <th>Кабінет</th>
+                  <th>Примітка</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                ${lessons.map(lesson => `
+
+                  <tr>
+
+                    <td>${lesson.lesson}</td>
+
+                    <td>${escapeHTML(lesson.subject)}</td>
+
+                    <td>${escapeHTML(lesson.time)}</td>
+
+                    <td>${escapeHTML(lesson.room)}</td>
+
+                    <td>${escapeHTML(lesson.note || '')}</td>
+
+                  </tr>
+
+                `).join('')}
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        `).join('')}
+
+        ${item.general_note
+          ? `
+            <p class="schedule-note">
+              ${escapeHTML(item.general_note)}
+            </p>
+          `
+          : ''
+        }
+
+      </article>
+
+    `).join('');
+
+  } catch (error) {
+
+    showError(element, error.message);
+
+  }
 }

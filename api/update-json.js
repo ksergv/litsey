@@ -1,7 +1,7 @@
 const ALLOWED_FILES = new Set([
   'data/news.json',
   'data/photos.json',
-  'data/schedule.json'
+  'data/schedule.json',
 ]);
 
 function sendJSON(response, statusCode, data) {
