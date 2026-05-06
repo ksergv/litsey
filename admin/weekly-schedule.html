@@ -156,7 +156,7 @@
       <button type="button" onclick="showDay('Пʼятниця', event)">
         Пʼятниця
       </button>
-
+      <button type="button" onclick="handleBack()">Вернуться</button>
     </div>
 
     <div id="schedule-table-container"></div>
@@ -448,6 +448,10 @@ console.log(allSchedules);
 
   });
 
+  
+    function handleBack() {
+    window.location.href = 'index.html';
+}
 </script>
 
 </body>
