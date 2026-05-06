@@ -427,6 +427,9 @@ if (!adminKey) {
   return;
 
 }
+if (!confirm('Оновити weekly-schedule.json?')) {
+  return;
+}
   const response = await fetch('/api/update-json', {
 
   method: 'POST',
