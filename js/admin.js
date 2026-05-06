@@ -596,15 +596,7 @@ function getApiEndpoint() {
   }
 }
 
-const savedKey = sessionStorage.getItem('adminKey');
 
-if (savedKey) {
-
-  document.getElementById(
-    'admin-api-key'
-  ).value = savedKey;
-
-}
 
 function getAdminApiKey() {
 
@@ -630,40 +622,55 @@ function getAdminApiKey() {
 }
 
 async function publishJSON(filename, content) {
-  const aDomminKey = getAdminApiKey();
+
+  const adminKey = getAdminApiKey();
 
   if (!adminKey) {
     alert('Введіть ключ адміністратора Vercel API.');
     return false;
   }
+
   setApiStatus(`Відправляємо ${filename}...`);
 
   try {
+
     const response = await fetch(getApiEndpoint(), {
+
       method: 'POST',
+
       headers: {
         'Content-Type': 'application/json',
         'X-Admin-Key': adminKey
       },
+
       body: JSON.stringify({
         filename,
         content,
         message: `update ${filename}`
       })
+
     });
 
     const result = await response.json();
 
     if (!response.ok) {
-      throw new Error(result.error || 'Не вдалося оновити файл на GitHub.');
+      throw new Error(
+        result.error || 'Не вдалося оновити файл на GitHub.'
+      );
     }
 
     setApiStatus(`${filename} відправлено на GitHub.`);
+
     return true;
+
   } catch (error) {
+
     setApiStatus(error.message, true);
+
     return false;
+
   }
+
 }
 
 function publishNewsJSON() {
