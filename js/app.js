@@ -332,28 +332,47 @@ async function loadWeeklySchedule() {
 
     const data = await loadJSON('/data/weekly-schedule.json');
 
-    if (!data.length) {
+    const grade = document.getElementById('gradeFilter').value;
+    const letter = document.getElementById('letterFilter').value;
+
+    let filtered = data;
+
+    if (grade !== 'all') {
+
+      filtered = filtered.filter(item =>
+        item.class.startsWith(grade)
+      );
+
+    }
+
+    if (letter !== 'all') {
+
+      filtered = filtered.filter(item =>
+        item.class.includes(`-${letter}`)
+      );
+
+    }
+
+    if (!filtered.length) {
 
       element.innerHTML =
-        '<p class="empty">Розклад ще не додано.</p>';
+        '<p class="empty">Розклад не знайдено.</p>';
 
       return;
 
     }
 
-    element.innerHTML = data.map(item => {
+    element.innerHTML = filtered.map(item => {
 
       const daysHTML = Object.entries(item.week)
 
         .map(([day, lessons]) => {
 
-          // удаляем пустые уроки
-          const filteredLessons = lessons.filter(
+          const validLessons = lessons.filter(
             lesson => lesson.subject.trim()
           );
 
-          // скрываем пустой день
-          if (!filteredLessons.length) {
+          if (!validLessons.length) {
             return '';
           }
 
@@ -377,7 +396,7 @@ async function loadWeeklySchedule() {
 
                 <tbody>
 
-                  ${filteredLessons.map(lesson => `
+                  ${validLessons.map(lesson => `
 
                     <tr>
 

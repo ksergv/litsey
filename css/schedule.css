@@ -1,0 +1,50 @@
+ .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+      border: 1px solid #dcdcdc;
+      padding: 8px;
+      vertical-align: top;
+    }
+
+    .schedule-table input,
+    .schedule-table textarea {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .schedule-table textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+  .schedule-days {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+ .schedule-days button.active {
+      background: #2f7d4c;
+      color: white;
+    }
+      .success-message {
+      margin-top: 15px;
+      color: #2f7d4c;
+      font-weight: bold;
+    }
+
+    @media (max-width: 900px) {
+      .schedule-table {
+        font-size: 14px;
+      }
+
+      .schedule-table th,
+      .schedule-table td {
+        padding: 4px;
+      }
+    }
