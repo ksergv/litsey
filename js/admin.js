@@ -596,18 +596,46 @@ function getApiEndpoint() {
   }
 }
 
+const savedKey = sessionStorage.getItem('adminKey');
+
+if (savedKey) {
+
+  document.getElementById(
+    'admin-api-key'
+  ).value = savedKey;
+
+}
+
 function getAdminApiKey() {
-  return getValue('admin-api-key');
+
+  const input = document.getElementById(
+    'admin-api-key'
+  );
+
+  const value = input.value.trim();
+
+  if (value) {
+
+    sessionStorage.setItem(
+      'adminKey',
+      value
+    );
+
+    return value;
+
+  }
+
+  return sessionStorage.getItem('adminKey') || '';
+
 }
 
 async function publishJSON(filename, content) {
-  const adminKey = getAdminApiKey();
+  const aDomminKey = getAdminApiKey();
 
   if (!adminKey) {
     alert('Введіть ключ адміністратора Vercel API.');
     return false;
   }
-
   setApiStatus(`Відправляємо ${filename}...`);
 
   try {
@@ -672,3 +700,21 @@ async function publishAllJSON() {
 
   setApiStatus('Усі JSON-файли відправлено на GitHub.');
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+
+  const savedKey = sessionStorage.getItem('adminKey');
+
+  if (savedKey) {
+
+    const input = document.getElementById(
+      'admin-api-key'
+    );
+
+    if (input) {
+      input.value = savedKey;
+    }
+
+  }
+
+});

@@ -382,7 +382,7 @@ console.log(allSchedules);
   renderScheduleTable(currentDay);
 
 }
-  function saveWeeklySchedule() {
+ async function saveWeeklySchedule() {
 
     const className = document.getElementById(
       'schedule-class'
@@ -415,30 +415,68 @@ console.log(allSchedules);
 
     allSchedules = filtered;
 
-    const blob = new Blob(
-      [JSON.stringify(allSchedules, null, 2)],
-      { type: 'application/json' }
-    );
 
-    const url = URL.createObjectURL(blob);
+try {
 
-    const a = document.createElement('a');
+  const response = await fetch('/api/update-json', {
 
-    a.href = url;
+  method: 'POST',
 
-    a.download = 'weekly-schedule.json';
+  headers: {
+    'Content-Type': 'application/json',
 
-    a.click();
+     'X-Admin-Key': adminKey
+  },
 
-    URL.revokeObjectURL(url);
+  body: JSON.stringify({
 
+    filename: 'weekly-schedule.json',
+
+    content: allSchedules,
+
+    message: `update weekly schedule ${className}`
+
+  })
+
+});
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.error || 'Помилка збереження');
+  }
+
+  document.getElementById('save-message').textContent =
+    'Розклад успішно збережено';
+
+} catch (error) {
+
+  console.error(error);
+
+  alert(error.message);
+
+}
     document.getElementById('save-message').textContent =
-      'weekly-schedule.json готовий до завантаження';
+      'weekly-schedule.json завантажен до github';
 
   }
 
   document.addEventListener('DOMContentLoaded', async () => {
 
+    const savedKey = sessionStorage.getItem('adminKey');
+
+  if (savedKey) {
+
+    const input = document.getElementById(
+      'admin-api-key'
+    );
+
+    if (input) {
+      input.value = savedKey;
+    }
+
+  }
+    
     await loadExistingSchedules();
 
     renderScheduleTable('Понеділок');
