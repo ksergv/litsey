@@ -418,6 +418,15 @@ console.log(allSchedules);
 
 try {
 
+const adminKey = sessionStorage.getItem('adminKey');
+
+if (!adminKey) {
+
+  alert('Введіть API ключ в адмінці');
+
+  return;
+
+}
   const response = await fetch('/api/update-json', {
 
   method: 'POST',
@@ -463,20 +472,7 @@ try {
 
   document.addEventListener('DOMContentLoaded', async () => {
 
-    const savedKey = sessionStorage.getItem('adminKey');
-
-  if (savedKey) {
-
-    const input = document.getElementById(
-      'admin-api-key'
-    );
-
-    if (input) {
-      input.value = savedKey;
-    }
-
-  }
-    
+   
     await loadExistingSchedules();
 
     renderScheduleTable('Понеділок');
