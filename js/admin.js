@@ -707,7 +707,6 @@ async function publishAllJSON() {
 
   setApiStatus('Усі JSON-файли відправлено на GitHub.');
 }
-
 document.addEventListener('DOMContentLoaded', () => {
 
   const savedKey = sessionStorage.getItem('adminKey');
