@@ -50,5 +50,15 @@
         "caption": "фото от Гены"
       }
     ]
+  },
+  {
+    "section": "Заходи",
+    "title": "Наша Перемога!",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dz6thazaa/image/upload/v1777811310/FB_IMG_1777809765936_resh3y.jpg",
+        "caption": "Привит"
+      }
+    ]
   }
 ]
