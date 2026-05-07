@@ -32,20 +32,6 @@
     ]
   },
   {
-    "section": "Шкільне життя",
-    "title": "Життя ліцею",
-    "images": [
-      {
-        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/camera",
-        "caption": "Фото з перерви"
-      },
-      {
-        "url": "https://res-console.cloudinary.com/dos2lc5ns/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/YWN0aW9uX2NxMXh0bw==/template_primary",
-        "caption": "Шкільні моменти"
-      }
-    ]
-  },
-  {
     "section": "Заходи",
     "title": "1 сентября",
     "images": [
