@@ -1,233 +1,6 @@
 [
   {
     "section": "Заняття",
-    "class": "10-Б",
-    "week": {
-      "Понеділок": [
-        {
-          "lesson": 1,
-          "subject": "физика",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 2,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 3,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 4,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 5,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 6,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        }
-      ],
-      "Вівторок": [
-        {
-          "lesson": 1,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 2,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 3,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 4,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 5,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 6,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        }
-      ],
-      "Середа": [
-        {
-          "lesson": 1,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 2,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 3,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 4,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 5,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 6,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        }
-      ],
-      "Четвер": [
-        {
-          "lesson": 1,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 2,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 3,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 4,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 5,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 6,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        }
-      ],
-      "Пʼятниця": [
-        {
-          "lesson": 1,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 2,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 3,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 4,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 5,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        },
-        {
-          "lesson": 6,
-          "subject": "",
-          "time": "",
-          "room": "",
-          "note": ""
-        }
-      ]
-    },
-    "general_note": ""
-  },
-  {
-    "section": "Заняття",
     "class": "10-А",
     "week": {
       "Понеділок": [
@@ -463,6 +236,233 @@
           "subject": "Математика ",
           "time": "1",
           "room": "2",
+          "note": ""
+        },
+        {
+          "lesson": 2,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 3,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 4,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 5,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 6,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        }
+      ],
+      "Вівторок": [
+        {
+          "lesson": 1,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 2,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 3,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 4,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 5,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 6,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        }
+      ],
+      "Середа": [
+        {
+          "lesson": 1,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 2,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 3,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 4,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 5,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 6,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        }
+      ],
+      "Четвер": [
+        {
+          "lesson": 1,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 2,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 3,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 4,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 5,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 6,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        }
+      ],
+      "Пʼятниця": [
+        {
+          "lesson": 1,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 2,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 3,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 4,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 5,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        },
+        {
+          "lesson": 6,
+          "subject": "",
+          "time": "",
+          "room": "",
+          "note": ""
+        }
+      ]
+    },
+    "general_note": ""
+  },
+  {
+    "section": "Заняття",
+    "class": "10-Б",
+    "week": {
+      "Понеділок": [
+        {
+          "lesson": 1,
+          "subject": "Физика",
+          "time": "",
+          "room": "",
           "note": ""
         },
         {
