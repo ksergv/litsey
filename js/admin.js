@@ -175,6 +175,7 @@ function addPhotoRow(url = '', caption = '') {
     <input placeholder="URL фото" value="${url}">
     <input placeholder="Підпис" value="${caption}">
     <button type="button" onclick="this.parentElement.remove()">Видалити</button>
+     <button type="button" onclick="addPhotos()">Додати фото</button>
   `;
 
   container.appendChild(div);
