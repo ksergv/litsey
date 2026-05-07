@@ -1,0 +1,58 @@
+[
+  {
+    "section": "Заходи",
+    "title": "Шкільні заходи",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dos2lc5ns/image/upload/v1777975796/62abae73-67e0-430b-8fd9-4374a66cd11f_hzqaw7.jpg",
+        "caption": "Учні 6-х класів на уроці «Пізнаємо природу» створювали справжню екомайстерню 🌿♻️ З підручних матеріалів виготовили яскраві та зручні контейнери для сортування сміття. Кожен — зі своїм дизайном, ідеєю та важливим посланням 💡"
+      },
+      {
+        "url": "https://res.cloudinary.com/dos2lc5ns/image/upload/v1777976020/cd59a9a8-27ca-4499-93e8-c4960b4c96db_c8bjnj.jpg",
+        "caption": "До Всесвітнього дня імунізації медичними сестрами було проведено інформаційно-просвітницьку бесіду з учнями навчального закладу.Тема 2026 року «Вакцини захищають кожне покоління »"
+      }
+    ]
+  },
+  {
+    "section": "Уроки",
+    "title": "Навчальні моменти",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/casual",
+        "caption": "Робота в класі"
+      },
+      {
+        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/models",
+        "caption": "Практичне завдання"
+      },
+      {
+        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/colored_pencils",
+        "caption": "Творчий процес"
+      }
+    ]
+  },
+  {
+    "section": "Шкільне життя",
+    "title": "Життя ліцею",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/demo/image/upload/f_auto,q_auto,w_1200/docs/camera",
+        "caption": "Фото з перерви"
+      },
+      {
+        "url": "https://res-console.cloudinary.com/dos2lc5ns/thumbnails/transform/v1/image/upload/Y19maWxsLGhfMjAwLHdfMjAw/v1/YWN0aW9uX2NxMXh0bw==/template_primary",
+        "caption": "Шкільні моменти"
+      }
+    ]
+  },
+  {
+    "section": "Заходи",
+    "title": "1 сентября",
+    "images": [
+      {
+        "url": "https://res.cloudinary.com/dt4tkhpts/image/upload/v1777817829/DSC05927_k3ecls.jpg",
+        "caption": "Свято першого дзвоника"
+      }
+    ]
+  }
+]

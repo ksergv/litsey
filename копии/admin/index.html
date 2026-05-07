@@ -75,16 +75,19 @@
           <h2>Додати розклад</h2>
 
           <label for="schedule-section">Розділ</label>
-          <select id="schedule-section">
+       <select id="schedule-section" onchange="handleScheduleSection()">
+
+            <option value="">Оберіть розділ</option>
+
             <option>Заняття</option>
             <option>Заходи</option>
             <option>Контрольні</option>
+
           </select>
 
           <label for="schedule-type">Тип запису</label>
           <select id="schedule-type">
             <option value="text">Текст</option>
-            <option value="classes">За класами</option>
           </select>
 
           <label for="schedule-title">Заголовок</label>
@@ -96,11 +99,11 @@
           <label for="schedule-text">Текст</label>
           <textarea id="schedule-text" placeholder="Час та опис"></textarea>
 
-          <label for="schedule-classes">Класи та розклад</label>
-          <textarea id="schedule-classes" placeholder="11-А: 10:00 - математика\n11-Б: 10:00 - історія"></textarea>
+     
 
           <button type="button" onclick="addSchedule()">Додати</button>
         </section>
+
       </div>
 
       <section class="admin-panel">
@@ -119,12 +122,12 @@
         <label for="admin-api-key">Ключ адміністратора Vercel API</label>
         <!--<input type="password" id="admin-api-key" autocomplete="off" placeholder="ADMIN_API_KEY">
       -->
-        <input 
-          type="password" 
-          id="admin-api-key" 
-          value="litsey-admin-2026-long-secret-key" 
-          autocomplete="off" 
-        >
+       <input
+        type="password"
+        id="admin-api-key"
+        autocomplete="off"
+        placeholder="ADMIN_API_KEY"
+      >
         
         <div class="button-row">
           <button type="button" onclick="publishNewsJSON()">Відправити news.json</button>
@@ -138,5 +141,14 @@
   </main>
 
   <script src="../js/admin.js"></script>
+  <script>
+    function handleScheduleSection() {
+  const value = document.getElementById('schedule-section').value;
+
+  if (value === 'Заняття') {
+    window.location.href = 'weekly-schedule.html';
+  }
+}
+  </script>
 </body>
 </html>

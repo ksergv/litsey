@@ -217,7 +217,9 @@ let dateTo = '';
 function updateFilter() {
   selectedGrade = document.getElementById('gradeFilter').value;
   selectedLetter = document.getElementById('letterFilter').value;
-  loadWeeklySchedule(); 
+  dateFrom = document.getElementById('dateFrom').value;
+  dateTo = document.getElementById('dateTo').value;
+  loadSchedule();
 }
 
 function renderScheduleList(data) {
@@ -299,7 +301,7 @@ async function loadSchedule() {
     const testsData = filteredData.filter(i => i.section === 'Контрольні');
 
     // Заняття
-   loadWeeklySchedule ()
+    loadWeeklySchedule()
 
     // Заходи
     if (!eventsData.length) {

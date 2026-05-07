@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Weekly Schedule Admin</title>
+
+  <link rel="stylesheet" href="../css/style.css">
+
+  <style>
+    .schedule-editor {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .schedule-topbar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .schedule-days {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .schedule-days button.active {
+      background: #2f7d4c;
+      color: white;
+    }
+
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+      border: 1px solid #dcdcdc;
+      padding: 8px;
+      vertical-align: top;
+    }
+
+    .schedule-table input,
+    .schedule-table textarea {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .schedule-table textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .success-message {
+      margin-top: 15px;
+      color: #2f7d4c;
+      font-weight: bold;
+    }
+
+    @media (max-width: 900px) {
+      .schedule-table {
+        font-size: 14px;
+      }
+
+      .schedule-table th,
+      .schedule-table td {
+        padding: 4px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="schedule-editor">
+
+    <h1>Редактор розкладу</h1>
+
+    <div class="schedule-topbar">
+
+      <select id="schedule-class" onchange="loadClassSchedule()">
+        <option value="">Оберіть клас</option>
+
+        <option>1-А</option>
+        <option>1-Б</option>
+
+        <option>2-А</option>
+        <option>2-Б</option>
+
+        <option>3-А</option>
+        <option>3-Б</option>
+
+        <option>4-А</option>
+        <option>4-Б</option>
+
+        <option>5-А</option>
+        <option>5-Б</option>
+
+        <option>6-А</option>
+        <option>6-Б</option>
+
+        <option>7-А</option>
+        <option>7-Б</option>
+
+        <option>8-А</option>
+        <option>8-Б</option>
+
+        <option>9-А</option>
+        <option>9-Б</option>
+
+        <option>10-А</option>
+        <option>10-Б</option>
+
+        <option>11-А</option>
+        <option>11-Б</option>
+      </select>
+
+      <input
+        id="general-note"
+        placeholder="Загальна примітка"
+      >
+
+    </div>
+
+    <div class="schedule-days">
+
+      <button type="button" onclick="showDay('Понеділок', event)">
+        Понеділок
+      </button>
+
+      <button type="button" onclick="showDay('Вівторок', event)">
+        Вівторок
+      </button>
+
+      <button type="button" onclick="showDay('Середа', event)">
+        Середа
+      </button>
+
+      <button type="button" onclick="showDay('Четвер', event)">
+        Четвер
+      </button>
+
+      <button type="button" onclick="showDay('Пʼятниця', event)">
+        Пʼятниця
+      </button>
+      <button type="button" onclick="handleBack()">Вернуться</button>
+    </div>
+
+    <div id="schedule-table-container"></div>
+
+    <div class="actions">
+
+      <button type="button" onclick="saveWeeklySchedule()">
+        Зберегти розклад
+      </button>
+
+      <button type="button" onclick="clearCurrentDay()">
+        Очистити день
+      </button>
+
+    </div>
+
+    <div
+      id="save-message"
+      class="success-message"
+    ></div>
+
+  </main>
+
+  <script>
+
+  const DAYS = [
+    'Понеділок',
+    'Вівторок',
+    'Середа',
+    'Четвер',
+    'Пʼятниця'
+  ];
+
+  let currentDay = 'Понеділок';
+
+  let allSchedules = [];
+
+  const weeklyDraft = {};
+
+  DAYS.forEach(day => {
+
+    weeklyDraft[day] = Array.from({ length: 6 }).map((_, i) => ({
+      lesson: i + 1,
+      subject: '',
+      time: '',
+      room: '',
+      note: ''
+    }));
+
+  });
+
+  async function loadExistingSchedules() {
+
+    try {
+
+      const response = await fetch('../data/weekly-schedule.json');
+console.log(response);
+      if (!response.ok) {
+        throw new Error('Не вдалося завантажити weekly-schedule.json');
+      }
+
+      allSchedules = await response.json();
+console.log(allSchedules);
+    } catch (error) {
+
+      console.warn(error);
+
+      allSchedules = [];
+
+    }
+  }
+
+  function renderScheduleTable(day) {
+
+    currentDay = day;
+
+    const container = document.getElementById(
+      'schedule-table-container'
+    );
+
+    const lessons = weeklyDraft[day];
+
+    container.innerHTML = `
+      <table class="schedule-table">
+
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Предмет</th>
+            <th>Час</th>
+            <th>Кабінет</th>
+            <th>Примітка</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          ${lessons.map((lesson, i) => `
+
+            <tr>
+
+              <td>${lesson.lesson}</td>
+
+              <td>
+                <input
+                  value="${lesson.subject}"
+                  oninput="updateLesson(${i}, 'subject', this.value)"
+                >
+              </td>
+
+              <td>
+                <input
+                  value="${lesson.time}"
+                  oninput="updateLesson(${i}, 'time', this.value)"
+                >
+              </td>
+
+              <td>
+                <input
+                  value="${lesson.room}"
+                  oninput="updateLesson(${i}, 'room', this.value)"
+                >
+              </td>
+
+              <td>
+                <textarea
+                  oninput="updateLesson(${i}, 'note', this.value)"
+                >${lesson.note}</textarea>
+              </td>
+
+            </tr>
+
+          `).join('')}
+
+        </tbody>
+
+      </table>
+    `;
+  }
+
+  function updateLesson(index, field, value) {
+
+    weeklyDraft[currentDay][index][field] = value;
+
+  }
+
+  function showDay(day, event) {
+
+    document.querySelectorAll('.schedule-days button')
+      .forEach(btn => btn.classList.remove('active'));
+
+    event.target.classList.add('active');
+
+    renderScheduleTable(day);
+
+  }
+
+  function clearCurrentDay() {
+
+    weeklyDraft[currentDay] = Array.from({ length: 6 }).map((_, i) => ({
+      lesson: i + 1,
+      subject: '',
+      time: '',
+      room: '',
+      note: ''
+    }));
+
+    renderScheduleTable(currentDay);
+
+  }
+
+  function loadClassSchedule() {
+
+  const className = document.getElementById(
+    'schedule-class'
+  ).value;
+
+  const existing = allSchedules.find(
+    item => item.class === className
+  );
+
+  if (!existing) {
+
+    DAYS.forEach(day => {
+
+      weeklyDraft[day] = Array.from({ length: 6 }).map((_, i) => ({
+        lesson: i + 1,
+        subject: '',
+        time: '',
+        room: '',
+        note: ''
+      }));
+
+    });
+
+  } else {
+
+    DAYS.forEach(day => {
+
+      weeklyDraft[day] = structuredClone(
+        existing.week[day] || []
+      );
+
+      while (weeklyDraft[day].length < 6) {
+
+        weeklyDraft[day].push({
+          lesson: weeklyDraft[day].length + 1,
+          subject: '',
+          time: '',
+          room: '',
+          note: ''
+        });
+
+      }
+
+    });
+
+    document.getElementById('general-note').value =
+      existing.general_note || '';
+
+  }
+
+  renderScheduleTable(currentDay);
+
+}
+ async function saveWeeklySchedule() {
+
+    const className = document.getElementById(
+      'schedule-class'
+    ).value;
+
+    if (!className) {
+      alert('Оберіть клfс');
+      return;
+    }
+
+    const data = {
+
+      section: 'Заняття',
+
+      class: className,
+
+      week: structuredClone(weeklyDraft),
+
+      general_note: document.getElementById(
+        'general-note'
+      ).value
+
+    };
+
+    const filtered = allSchedules.filter(
+      item => item.class !== className
+    );
+
+    filtered.push(data);
+
+    allSchedules = filtered;
+
+
+try {
+
+const adminKey = sessionStorage.getItem('adminKey');
+
+if (!adminKey) {
+
+  alert('Введіть API ключ в адмінці');
+
+  return;
+
+}
+if (!confirm('Оновити weekly-schedule.json?')) {
+  return;
+}
+  const response = await fetch('/api/update-json', {
+
+  method: 'POST',
+
+  headers: {
+    'Content-Type': 'application/json',
+
+     'X-Admin-Key': adminKey
+  },
+
+  body: JSON.stringify({
+
+    filename: 'weekly-schedule.json',
+
+    content: allSchedules,
+
+    message: `update weekly schedule ${className}`
+
+  })
+
+});
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.error || 'Помилка збереження');
+  }
+
+  document.getElementById('save-message').textContent =
+    'Розклад успішно збережено';
+
+} catch (error) {
+
+  console.error(error);
+
+  alert(error.message);
+
+}
+    document.getElementById('save-message').textContent =
+      'weekly-schedule.json завантажен до github';
+
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+
+   await loadExistingSchedules();
+
+if (allSchedules.length) {
+
+  const firstClass = allSchedules[0].class;
+
+  const select = document.getElementById(
+    'schedule-class'
+  );
+
+  select.value = firstClass;
+
+  loadClassSchedule();
+
+} else {
+
+  renderScheduleTable('Понеділок');
+
+}
+
+  });
+
+  
+    function handleBack() {
+    window.location.href = 'index.html';
+}
+</script>
+
+</body>
+</html>
